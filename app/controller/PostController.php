@@ -93,14 +93,14 @@ public function new() {
         }
     }
 
-    // 自分の投稿取得
-    public function getSomeMyPost($start, $count, $user_id) {
+    // 自分の投稿取得 旧getMySomePost
+    public function getPostsById($start, $count, $user_id) {
         $post = new Post;
-        return $post =  Post::getSomeMyPost($start, $count, $user_id);
+        return $post =  Post::getPostsById($start, $count, $user_id);
     }
     // 自分の投稿数取得
-    public function myPostCount($user_id) {
+    public function PostCount($user_id) {
         $post = new Post;
-        return $count =  Post::getCountMyPost($user_id);
+        return $count =  Post::getPostCount($user_id);
     }
 }

@@ -67,9 +67,10 @@ class User {
         try {
             $dbh = dbConnect();
             $dbh->beginTransaction();
-            $sql = 'INSERT INTO users (email, password, created_at, updated_at) VALUE (:email, :password, :created_at, :updated_at)';
+            $sql = 'INSERT INTO users (email, password, name, created_at, updated_at) VALUE (:email, :password, :name, :created_at, :updated_at)';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+            $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
             $stmt->bindValue(':password', password_hash($this->password, PASSWORD_DEFAULT), PDO::PARAM_STR);
             $stmt->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
@@ -123,7 +124,7 @@ class User {
             $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
             $stmt->bindValue(':profile', $this->profile, PDO::PARAM_STR);
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
             $result = $stmt->execute();
             $dbh->commit();
 

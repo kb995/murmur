@@ -19,7 +19,7 @@ if(isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
         $max_page = ceil($page_count['COUNT(*)'] / 5);
         if($page < $max_page):
     ?>
-    <a class="pl-5 paging" 
+    <a class="pl-5 paging"
     href="<?php if(basename(__FILE__) == 'index') {echo 'index';} elseif(basename(__FILE__) == 'mypage') {echo 'mypage';  } ?>?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目&gt;</a>
     <?php endif; ?>
 </div>

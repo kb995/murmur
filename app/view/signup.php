@@ -4,10 +4,12 @@ require_once('../controller/UserController.php');
 if($_POST) {
     $controller = new UserController;
     $controller->new();
+    //　結果で分岐させる
+    header("Location: mypage.php");
+
 
     if(!empty($_SESSION['error_msgs'])) {
         $error_msgs = $_SESSION['error_msgs'];
-        // echo "<pre>"; var_dump($error_msgs); echo"</pre>";
         unset($_SESSION['error_msgs']);
     }
 }
@@ -31,6 +33,10 @@ if($_POST) {
             </div>
         <?php endif; ?>
 
+        <div class="form-controll my-4">
+            <label class="control-label" for="">ユーザー名</label>
+            <input class="form-control" type="text" name="name" value="<?php if(!empty($_POST['name'])) echo $_POST['name']; ?>">
+        </div>
         <div class="form-controll my-4">
             <label class="control-label" for="">E-mail<span class="badge badge-danger ml-2">必須</span></label>
             <input class="form-control" type="email" name="email" value="<?php if(!empty($_POST['email'])) echo $_POST['email']; ?>">

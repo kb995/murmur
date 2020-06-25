@@ -125,7 +125,7 @@ class Post {
     // 自分の投稿
     // 投稿数セット
 
-    public static function getSomeMyPost($start, $count, $user_id) {
+    public static function getPostsById($start, $count, $user_id) {
         try {
             $dbh = dbConnect();
             $sql = 'SELECT users.name, posts.id, posts.user_id, posts.text, posts.created_at FROM posts JOIN users ON posts.user_id = users.id WHERE users.delete_flg = 0 AND posts.delete_flg = 0 AND posts.user_id = :user_id ORDER BY posts.created_at DESC LIMIT :start, :count';
@@ -142,7 +142,7 @@ class Post {
         return $result;
     }
 
-    public static function getCountMyPost($user_id) {
+    public static function getPostCount($user_id) {
         $dbh = dbConnect();
         $sql = 'SELECT COUNT(*) FROM posts WHERE delete_flg = 0 AND user_id = :user_id';
         $stmt = $dbh->prepare($sql);

@@ -4,6 +4,8 @@ require_once('../controller/UserController.php');
 if($_POST) {
     $controller = new UserController;
     $controller->login();
+    header("Location: mypage.php");
+
 
     if(!empty($_SESSION['error_msgs'])) {
         $error_msgs = $_SESSION['error_msgs'];

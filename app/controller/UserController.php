@@ -21,6 +21,7 @@ class UserController {
     public function new() {
         $validation = new UserValidation;
         $data = [
+            "name" => $_POST['name'],
             "email" => $_POST['email'],
             "password" => $_POST['password'],
         ];
@@ -32,9 +33,9 @@ class UserController {
         } else {
         $user = new User;
         $user->setEmail($data['email']);
+        $user->setName($data['name']);
         $user->setPassword($data['password']);
         $user->save();
-        header("Location: index.php");
         }
     }
 
@@ -57,7 +58,6 @@ class UserController {
             $user->authUser($data['email'], $data['password']);
 
             if($_SESSION['login_flg']) {
-                header("Location:index.php");
             }
         }
     }

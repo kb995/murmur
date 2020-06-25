@@ -35,7 +35,7 @@ $posts = $post->getSomePost($start, 5);
         <article>
             <?php foreach($posts as $post): ?>
             <div class="w-50 mx-auto card my-3 p-3">
-                <p>投稿ID:<?php echo $post['id']; ?></p>
+                <!-- <p>投稿ID:<a href="userDetail.php?detail_id=<?php echo $post['user_id']; ?>"><?php echo $post['id']; ?></a></p> -->
                 <p>投稿日:<?php echo $post['created_at']; ?></p>
                 <p>投稿ユーザー:<?php echo $post['user_id']; ?></p>
                 <p><a href="detail.php?post_id=<?php echo $post['id']; ?>"><?php echo $post['text']; ?></a></p>
