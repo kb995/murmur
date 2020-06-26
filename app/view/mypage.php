@@ -10,7 +10,6 @@ $post = new PostController;
 $like = new LikeController;
 
 $login_user = $user->getUser($_SESSION['login_user']['id']);
-// echo "<pre>"; var_dump($_POST); echo"</pre>";
 
 // ログイン期限
 $user->loginLimit();
@@ -28,20 +27,22 @@ $start = 5 * ($page - 1);
 $post_count = $post->PostCount($login_user['id']);
 $posts = $post->getSomePost($start, 5);
 
-// 投稿
-// if($_POST) {
-//     $controller = new PostController;
-//     $result = $controller->new();
-//     header("Location: mypage.php");
+echo "<pre>"; var_dump($_POST); echo"</pre>";
 
-//     if(!empty($_SESSION['error_msgs'])) {
-//         $error_msgs = $_SESSION['error_msgs'];
-//         unset($_SESSION['error_msgs']);
-//     }
-// }
+// 投稿
+if(!empty($_POST) && $_POST['type'] == 'new') {
+    $controller = new PostController;
+    $result = $controller->new();
+    header("Location: mypage.php");
+
+    if(!empty($_SESSION['error_msgs'])) {
+        $error_msgs = $_SESSION['error_msgs'];
+        unset($_SESSION['error_msgs']);
+    }
+}
 
 // いいね
-if($_POST['like'] == 'act') {
+if(!empty($_POST) && $_POST['type'] == 'post') {
     $post_id = $_POST['post_id'];
     $user_id = $_POST['user_id'];
 
@@ -76,8 +77,20 @@ function likes_duplicate($user_id,$post_id){
     }else{
         return false;
     }
+  }
+
+  function get_like_count($post_id){
+    $dbh = dbConnect();
+    $sql = "SELECT COUNT(user_id) FROM likes WHERE post_id = :post_id";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':post_id', $post_id, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetch();
 
   }
+
+//   $count = get_like_count($_POST['post_id']);
+//   echo "<pre>"; var_dump($count); echo"</pre>";
 ?>
 
 <?php require('head.php'); ?>
@@ -118,6 +131,8 @@ function likes_duplicate($user_id,$post_id){
                     </ul>
                 </div>
             <?php endif; ?>
+            <input type="hidden" name="type" value="new">
+
             <textarea class="form-control" name="text" cols="10" rows="10"><?php if(!empty($_POST['text'])) echo $_POST['text']; ?></textarea>
         </div>
         <div class="text-right my-3">
@@ -125,12 +140,12 @@ function likes_duplicate($user_id,$post_id){
         </div>
     </form>
 
+    <!-- タイムライン -->
     <article>
         <h2 class="text-center h3">タイムライン</h2>
         <?php foreach($posts as $post): ?>
             <div class="w-50 mx-auto card my-5 p-4">
                 <p>ユーザーID:<a href="userDetail.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['user_id']; ?></a></p>
-
                 <p>投稿ID:<a href="detail.php?post_id=<?php echo $post['id']; ?>"><?php echo $post['id']; ?></a></p>
                 <p>投稿日:<?php echo $post['created_at']; ?></p>
                 <p><?php echo $post['text']; ?></a></p>
@@ -139,8 +154,21 @@ function likes_duplicate($user_id,$post_id){
                 <form action="" method="post">
                     <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
                     <input type="hidden" name="user_id" value="<?php echo $post['user_id']; ?>">
-                    <button type="submit" name="like" value="act" class="favorite_btn">いいね</button>
+                    <button type="submit" name="type" value="like" class="like_btn text-danger">
+                        <?php if (!likes_duplicate($post['user_id'], $post['id'])): ?>
+                            <i class="far fa-heart"></i>
+                        <?php else: ?>
+                            <i class="fas fa-heart"></i>
+                        <?php endif; ?>
+                    </button>
+                    <span>
+                        <?php
+                         $count = get_like_count($post['id']);
+                         echo $count[0];
+                         ?>
+                    </span>
                 </form>
+
             </div>
         <?php endforeach; ?>
     </article>
