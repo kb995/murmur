@@ -2,15 +2,18 @@
 require_once('../config/app.php');
 
 class User {
-    public const DEFAULT_IMG = '';
-    public $error_msgs = array();
 
+    // プロパティ
+    public const DEFAULT_IMG = '';
+    
     public $user_id;
     public $email;
     public $password;
     public $name;
     public $profile;
     public $thumbnail;
+
+    public $error_msgs = array();
 
     // アクセサメソッド
     public function getEmail() {
@@ -38,7 +41,9 @@ class User {
         $this->profile = $profile;
     }
 
-    // ユーザー全件取得
+    // ===== データ取得 =====
+
+    // ユーザーを全件取得
     public function all() {
         $dbh = dbConnect();
         $sql = 'SELECT * FROM users ';
@@ -47,7 +52,7 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // ユーザー一件取得
+    // ユーザーを一件取得
     public function getOneUser($user_id) {
         try {
             $dbh = dbConnect();
@@ -61,6 +66,9 @@ class User {
         }
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+
+    // ===== CRUD =====
 
     // ユーザー登録
     public function save() {
@@ -84,6 +92,31 @@ class User {
             $error_msg['etc'] = 'しばらくしてから再度試してください';
         }
     }
+
+    // プロフィール更新
+    public function update($user_id) {
+        try {
+            $dbh = dbConnect();
+            $dbh->beginTransaction();
+            $sql = 'UPDATE users SET email = :email, name = :name, profile = :profile, updated_at = :updated_at WHERE id = :user_id';
+
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+            $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $stmt->bindValue(':profile', $this->profile, PDO::PARAM_STR);
+            $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+            $result = $stmt->execute();
+            $dbh->commit();
+
+        } catch (PDOException $e) {
+            $dbh->rollBack();
+            echo 'DB接続エラー発生 : ' . $e->getMessage();
+            $error_msg[] = 'しばらくしてから再度試してください';
+        }
+    }
+
+    // ===== 認証 =====
 
     // ログイン認証
     public function authUser($email, $password) {
@@ -109,29 +142,6 @@ class User {
         } catch (PDOException $e) {
             echo 'DB接続エラー発生 : ' . $e->getMessage();
             $error_msg['etc'] = 'しばらくしてから再度試してください';
-        }
-    }
-
-    // プロフ 更新
-    public function update($user_id) {
-        try {
-            $dbh = dbConnect();
-            $dbh->beginTransaction();
-            $sql = 'UPDATE users SET email = :email, name = :name, profile = :profile, updated_at = :updated_at WHERE id = :user_id';
-
-            $stmt = $dbh->prepare($sql);
-            $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
-            $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
-            $stmt->bindValue(':profile', $this->profile, PDO::PARAM_STR);
-            $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
-            $result = $stmt->execute();
-            $dbh->commit();
-
-        } catch (PDOException $e) {
-            $dbh->rollBack();
-            echo 'DB接続エラー発生 : ' . $e->getMessage();
-            $error_msg[] = 'しばらくしてから再度試してください';
         }
     }
 }

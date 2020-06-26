@@ -2,13 +2,17 @@
 
 require_once('../controller/UserController.php');
 require_once('../controller/PostController.php');
+require_once('../controller/LikeController.php');
+require_once('../config/app.php');
 
 $user = new UserController;
 $post = new PostController;
-$login_user = $user->getUser($_SESSION['login_user']['id']);
-echo "<pre>"; var_dump($_SESSION); echo"</pre>";
+$like = new LikeController;
 
-// ログインチェック
+$login_user = $user->getUser($_SESSION['login_user']['id']);
+// echo "<pre>"; var_dump($_POST); echo"</pre>";
+
+// ログイン期限
 $user->loginLimit();
 
 // ページング
@@ -25,19 +29,55 @@ $post_count = $post->PostCount($login_user['id']);
 $posts = $post->getSomePost($start, 5);
 
 // 投稿
-if($_POST) {
-    $controller = new PostController;
-    $result = $controller->new();
-    header("Location: mypage.php");
+// if($_POST) {
+//     $controller = new PostController;
+//     $result = $controller->new();
+//     header("Location: mypage.php");
 
-    if(!empty($_SESSION['error_msgs'])) {
-        $error_msgs = $_SESSION['error_msgs'];
-        unset($_SESSION['error_msgs']);
-    }
+//     if(!empty($_SESSION['error_msgs'])) {
+//         $error_msgs = $_SESSION['error_msgs'];
+//         unset($_SESSION['error_msgs']);
+//     }
+// }
+
+// いいね
+if($_POST['like'] == 'act') {
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+
+    if(likes_duplicate($user_id, $post_id)) {
+        $sql = 'DELETE FROM likes WHERE :user_id = user_id AND :post_id = post_id';
+    }else{
+        $sql = 'INSERT INTO likes(user_id, post_id) VALUES(:user_id, :post_id)';
+        }
+    try{
+        $dbh = dbConnect();
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':post_id', $post_id, PDO::PARAM_STR);
+        $result = $stmt->execute();
+    
+      } catch (Exception $e) {
+        error_log('エラー発生:' . $e->getMessage());
+      }
 }
 
+//お気に入りの重複チェック
+function likes_duplicate($user_id,$post_id){
+    $dbh = dbConnect();
+    $sql = "SELECT * FROM likes WHERE user_id = :user_id AND post_id = :post_id";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+    $stmt->bindValue(':post_id', $post_id, PDO::PARAM_STR);
+    $stmt->execute();
+    $data = $stmt->fetch();
+    if($data) {
+        return true;
+    }else{
+        return false;
+    }
 
-
+  }
 ?>
 
 <?php require('head.php'); ?>
@@ -48,12 +88,12 @@ if($_POST) {
 
     <h2 class="text-center h3">プロフィール</h2>
     <div class="card p-5 my-5 w-50 mx-auto">
-        <p>ID : <?php echo $login_user['id'] ?></p>
-        <p>名前 : <?php echo $login_user['name'] ?></p>
-        <p>メールアドレス : <?php echo $login_user['email'] ?></p>
-        <p>パスワード : <?php echo $login_user['password'] ?></p>
-        <p>プロフィール : <?php echo $login_user['profile'] ?></p>
-        <p>作成日 : <?php echo $login_user['created_at'] ?></p>
+        <p>ID : <?php echo $login_user['id']; ?></p>
+        <p>名前 : <?php echo $login_user['name']; ?></p>
+        <p>メールアドレス : <?php echo $login_user['email']; ?></p>
+        <p>パスワード : <?php echo $login_user['password']; ?></p>
+        <p>プロフィール : <?php echo $login_user['profile']; ?></p>
+        <p>作成日 : <?php echo $login_user['created_at']; ?></p>
         <a href="editProf.php?login_id=<?php echo $login_user['id']; ?>" type="button" class="btn btn-secondary">プロフィール編集</a>
         <div class="my-3">
             <span>投稿数 : <?php echo $post_count['COUNT(*)']; ?></span>
@@ -94,6 +134,13 @@ if($_POST) {
                 <p>投稿ID:<a href="detail.php?post_id=<?php echo $post['id']; ?>"><?php echo $post['id']; ?></a></p>
                 <p>投稿日:<?php echo $post['created_at']; ?></p>
                 <p><?php echo $post['text']; ?></a></p>
+
+                <!-- いいね -->
+                <form action="" method="post">
+                    <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $post['user_id']; ?>">
+                    <button type="submit" name="like" value="act" class="favorite_btn">いいね</button>
+                </form>
             </div>
         <?php endforeach; ?>
     </article>

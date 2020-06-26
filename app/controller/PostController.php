@@ -4,32 +4,36 @@ require_once('../validation/PostValidation.php');
 
 class PostController {
 
-// 全件取得
-// public function all() {
-//     $dbh = dbConnect();
-//     $sql = 'SELECT * FROM posts WHERE delete_flg = 0';
-//     $stmt = $dbh->prepare($sql);
-//     $stmt->execute();
-//     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-// }
+    // ===== データ取得 =====
 
-// 投稿 ページ分
-public function getSomePost($start, $count) {
-    $post = new Post;
+    // 投稿をページ数取得
+    public function getSomePost($start, $count) {
+        $post = new Post;
+        return $post =  Post::getSomePost($start, $count);
+    }
 
-    return $post =  Post::getSomePost($start, $count);
-}
+    // 投稿を一件取得
+    public function getPost($post_id) {
+        $post = new Post;
+        return $post =  Post::getOnePost($post_id);
+    }
 
+    // 指定ユーザーの投稿を取得
+    public function getPostsById($start, $count, $user_id) {
+        $post = new Post;
+        return $post =  Post::getPostsById($start, $count, $user_id);
+    }
 
-// 投稿 個別取得
-public function getPost($post_id) {
-    $post = new Post;
-    return $post =  Post::getOnePost($post_id);
-}
+    // 投稿件数を取得
+    public function PostCount($user_id) {
+        $post = new Post;
+        return $count =  Post::getPostCount($user_id);
+    }
 
+    // ===== CRUD =====
 
-//　投稿 登録
-public function new() {
+    //　新しい投稿を登録
+    public function new() {
         // バリデーション処理
         $validation = new PostValidation;
         $data = [
@@ -40,7 +44,7 @@ public function new() {
         if($validation->checkPost() === false) {
             $error_msgs = $validation->getErrorMsgs();
             $_SESSION['error_msgs'] = $error_msgs;
-            
+
         } else {
             $validate_data = $validation->getData();
             $text = $validate_data['text'];
@@ -51,7 +55,8 @@ public function new() {
             $post->save();
         }
     }
-    
+
+    // 投稿を削除
     public function delete() {
         $post_id = $_GET['post_id'];
 
@@ -69,20 +74,20 @@ public function new() {
         header('Location: index.php');
     }
 
-    //　投稿 編集
+    //　投稿を編集
     public function edit($post_id) {
         // バリデーション処理
         $validation = new PostValidation;
         $data = [
             "text" => $_POST['text'],
         ];
-       
+
         $validation->setData($data);
 
         if($validation->checkPost() === false) {
             $error_msgs = $validation->getErrorMsgs();
             $_SESSION['error_msgs'] = $error_msgs;
-            
+
         } else {
             $validate_data = $validation->getData();
             $text = $validate_data['text'];
@@ -91,16 +96,5 @@ public function new() {
             $post->setText($text);
             $post->update($post_id);
         }
-    }
-
-    // 自分の投稿取得 旧getMySomePost
-    public function getPostsById($start, $count, $user_id) {
-        $post = new Post;
-        return $post =  Post::getPostsById($start, $count, $user_id);
-    }
-    // 自分の投稿数取得
-    public function PostCount($user_id) {
-        $post = new Post;
-        return $count =  Post::getPostCount($user_id);
     }
 }

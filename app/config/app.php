@@ -1,12 +1,15 @@
 <?php
 
 // 設定
-// ==============================
+// ============
+// エラー表示
 ini_set('display_errors', 1);
+// セッション
 session_start();
 
+
 // DBデータ取得
-// ==============================
+// =============
 // DB設定
 const DSN = 'mysql:host=localhost;dbname=murmur;charset=utf8';
 const USERNAME = 'root';

@@ -9,7 +9,6 @@ class UserValidation {
     public function setData($data) {
         $this->data = $data;
     }
-
     // 値取得
     public function getData() {
         return $this->data;
@@ -20,7 +19,7 @@ class UserValidation {
         return $this->error_msgs;
     }
 
-    // ユーザー登録チェック
+    // ユーザー登録時チェック
     public function checkSignup() {
         $email = $this->data['email'];
         $password = $this->data['password'];
@@ -38,7 +37,7 @@ class UserValidation {
         return true;
     }
 
-    // プロフ更新チェック
+    // プロフ更新時チェック
     public function checkProf() {
         $email = $this->data['email'];
         $name = $this->data['name'];
@@ -47,12 +46,10 @@ class UserValidation {
         if(empty($email)) {
             $this->error_msgs[] = 'メールアドレスが未入力です';
         }
-       
 
         if(count($this->error_msgs) > 0) {
             return false;
         }
         return true;
     }
-    
 }

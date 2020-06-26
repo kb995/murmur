@@ -1,7 +1,7 @@
 <?php
 
 class PostValidation {
-    
+
     private $data;
     private $error_msgs = array();
 
