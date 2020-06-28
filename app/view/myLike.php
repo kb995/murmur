@@ -30,7 +30,8 @@ $my_follow_count = $user->followCount($login_user['id']);
 $my_followed_count = $user->followedCount($login_user['id']);
 
 // echo "<pre>"; var_dump($my_follow_count); echo"</pre>";
-$posts = $post->getSomePost($start, 5);
+// $posts = $post->getSomePost($start, 5);
+$posts = $post->getPostsById($start, 5, $login_user['id']);
 
 echo "<pre>"; var_dump($_POST); echo"</pre>";
 
@@ -104,7 +105,7 @@ function likes_duplicate($user_id,$post_id){
 <?php require('header.php'); ?>
 
 <main class="container my-5">
-    <h1 class="text-center mb-5">マイページ</h1>
+    <h1 class="text-center mb-5">いいねした投稿</h1>
 
     <h2 class="text-center h3">プロフィール</h2>
     <div class="card p-5 my-5 w-50 mx-auto">
@@ -149,7 +150,6 @@ function likes_duplicate($user_id,$post_id){
 
     <!-- タイムライン -->
     <article>
-        <h2 class="text-center h3">タイムライン</h2>
         <?php foreach($posts as $post): ?>
             <div class="w-50 mx-auto card my-5 p-4">
                 <p>ユーザーID:<a href="userDetail.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['user_id']; ?></a></p>
