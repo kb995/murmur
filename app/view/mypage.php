@@ -42,11 +42,10 @@ if(!empty($_POST) && $_POST['type'] == 'new') {
 }
 
 // いいね
-if(!empty($_POST) && $_POST['type'] == 'post') {
+if(!empty($_POST) && $_POST['type'] == 'like') {
     $post_id = $_POST['post_id'];
-    $user_id = $_POST['user_id'];
 
-    if(likes_duplicate($user_id, $post_id)) {
+    if(likes_duplicate($login_user['id'], $post_id)) {
         $sql = 'DELETE FROM likes WHERE :user_id = user_id AND :post_id = post_id';
     }else{
         $sql = 'INSERT INTO likes(user_id, post_id) VALUES(:user_id, :post_id)';
@@ -54,7 +53,7 @@ if(!empty($_POST) && $_POST['type'] == 'post') {
     try{
         $dbh = dbConnect();
         $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $login_user['id'], PDO::PARAM_STR);
         $stmt->bindValue(':post_id', $post_id, PDO::PARAM_STR);
         $result = $stmt->execute();
     
@@ -153,9 +152,8 @@ function likes_duplicate($user_id,$post_id){
                 <!-- いいね -->
                 <form action="" method="post">
                     <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $post['user_id']; ?>">
-                    <button type="submit" name="type" value="like" class="like_btn text-danger">
-                        <?php if (!likes_duplicate($post['user_id'], $post['id'])): ?>
+                    <button type="submit" name="type" value="like" class="like_btn text-danger border border-0">
+                        <?php if (!likes_duplicate($login_user['id'], $post['id'])): ?>
                             <i class="far fa-heart"></i>
                         <?php else: ?>
                             <i class="fas fa-heart"></i>

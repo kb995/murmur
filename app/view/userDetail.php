@@ -24,10 +24,45 @@ $start = 5 * ($page - 1);
 $post_count = $post->PostCount($_GET['user_id']);
 
 $posts = $post->getPostsById($start, 5, $user_detail['id']);
-echo "<pre>"; var_dump($user_detail); echo"</pre>";
+// echo "<pre>"; var_dump($user_detail); echo"</pre>";
 // echo "<pre>"; var_dump($_SESSION); echo"</pre>";
 
 
+// フォロー機能
+function check_follow($follow_user, $followed_user) {
+    try {
+        $dbh = dbConnect();
+        $sql = 'SELECT follow_id,followed_id FROM follow WHERE follow_id = :follow_id AND followed_id = :followed_id';
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':follow_id', $follow_user, PDO::PARAM_INT);
+        $stmt->bindValue(':followed_id', $followed_user, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+        
+    } catch (PDOException $e) {
+        echo 'DB接続エラー発生 : ' . $e->getMessage();
+        $this->error_msgs[] = 'しばらくしてから再度試してください';
+    }
+}
+
+if(!empty($_POST) && $_POST['type'] === 'follow') {
+    if(check_follow($login_user['id'], $user_detail['id'])) {
+        $sql ='DELETE FROM follow WHERE :follow_id = follow_id AND :followed_id = followed_id';
+    }else{
+        $sql ='INSERT INTO follow(follow_id,followed_id) VALUES(:follow_id,:followed_id)';
+    }
+    try {
+        $dbh = dbConnect();
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':follow_id', $login_user['id'], PDO::PARAM_INT);
+        $stmt->bindValue(':followed_id', $user_detail['id'], PDO::PARAM_INT);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        echo 'DB接続エラー発生 : ' . $e->getMessage();
+        $this->error_msgs[] = 'しばらくしてから再度試してください';
+    }
+}
 
 ?>
 
@@ -49,9 +84,16 @@ echo "<pre>"; var_dump($user_detail); echo"</pre>";
         <p><?php echo $user_detail['email'] ?></p>
         <p><?php echo $user_detail['password'] ?></p>
         <p><?php echo $user_detail['created_at'] ?></p>
-        <div>
-            <button class="btn btn-primary">フォローする</button>
-        </div>
+        
+        <!-- フォローボタン -->
+        <form action="" method="post">
+            <input type="hidden" name="type" value="follow">
+            <?php if(check_follow($login_user['id'], $user_detail['id'])) : ?>
+                <button class="btn btn-secondary" name="follow" type="submit">フォロー済み</button>
+            <?php else : ?>
+               <button class="btn btn-primary" name="follow" type="submit">フォロー</button>
+            <?php endif; ?>
+        </form>
     </div>
 
     <article>
@@ -65,7 +107,11 @@ echo "<pre>"; var_dump($user_detail); echo"</pre>";
         ?>
         さんの投稿
         </h2>
-        <div>投稿数 : <?php echo $post_count['COUNT(*)']; ?></div>
+        <span>投稿数 : <?php echo $post_count['COUNT(*)']; ?></span>
+        <span>いいね : </span>
+        <span>フォロー : </span>
+        <span>フォロワー : </span>
+
         <?php foreach($posts as $post): ?>
             <div class="w-50 mx-auto card my-5 p-4">
                 <p>投稿ID:<?php echo $post['id']; ?></p>
