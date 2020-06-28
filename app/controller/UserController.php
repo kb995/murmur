@@ -21,6 +21,18 @@ class UserController {
         return $user->getOneUser($user_id);
     }
 
+    // ライク数を取得
+    public function LikeCount($user_id) {
+        return $count =  User::getLikeCount($user_id);
+    }
+    // フォロー数取得
+    public function followCount($user_id) {
+        return $count =  User::getFollowCount($user_id);
+    }
+    // フォロワー数取得
+    public function followedCount($user_id) {
+        return $count =  User::getFollowedCount($user_id);
+    }
 
     // ===== CRUD =====
 

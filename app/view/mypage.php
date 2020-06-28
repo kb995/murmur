@@ -24,7 +24,12 @@ $start = 5 * ($page - 1);
 // $posts = $post->getPostsById($start, 5, $login_user['id']);
 
 // データ取得
-$post_count = $post->PostCount($login_user['id']);
+$my_post_count = $post->PostCount($login_user['id']);
+$my_like_count = $user->LikeCount($login_user['id']);
+$my_follow_count = $user->followCount($login_user['id']);
+$my_followed_count = $user->followedCount($login_user['id']);
+
+// echo "<pre>"; var_dump($my_follow_count); echo"</pre>";
 $posts = $post->getSomePost($start, 5);
 
 echo "<pre>"; var_dump($_POST); echo"</pre>";
@@ -77,7 +82,7 @@ function likes_duplicate($user_id,$post_id){
         return false;
     }
   }
-
+//記事のライク数表示
   function get_like_count($post_id){
     $dbh = dbConnect();
     $sql = "SELECT COUNT(user_id) FROM likes WHERE post_id = :post_id";
@@ -85,9 +90,12 @@ function likes_duplicate($user_id,$post_id){
     $stmt->bindValue(':post_id', $post_id, PDO::PARAM_STR);
     $stmt->execute();
     return $stmt->fetch();
-
   }
 
+  // ライクしている記事数取得
+  function get_like_post() {
+
+  }
 //   $count = get_like_count($_POST['post_id']);
 //   echo "<pre>"; var_dump($count); echo"</pre>";
 ?>
@@ -108,10 +116,10 @@ function likes_duplicate($user_id,$post_id){
         <p>作成日 : <?php echo $login_user['created_at']; ?></p>
         <a href="editProf.php?login_id=<?php echo $login_user['id']; ?>" type="button" class="btn btn-secondary">プロフィール編集</a>
         <div class="my-3">
-            <span>投稿数 : <?php echo $post_count['COUNT(*)']; ?></span>
-            <span>いいね : </span>
-            <span>フォロー : </span>
-            <span>フォロワー : </span>
+            <span>投稿数 : <?php echo $my_post_count['COUNT(*)']; ?></span>
+            <span>いいね : <?php echo $my_like_count['COUNT(*)']; ?></span>
+            <span>フォロー : <?php echo $my_follow_count['COUNT(*)']; ?></span>
+            <span>フォロワー : <?php echo $my_followed_count['COUNT(*)']; ?></span>
         </div>
     </div>
     <!-- <a class="text-danger" href="withdraw.php">退会</a> -->

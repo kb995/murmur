@@ -6,8 +6,19 @@ require_once('../controller/PostController.php');
 
 $user = new UserController;
 $post = new PostController;
+
+// データ取得
 $login_user = $user->getUser($_SESSION['login_user']['id']);
 $user_detail = $user->getUser($_GET['user_id']);
+
+$post_count = $post->PostCount($_GET['user_id']);
+$user_like_count = $user->LikeCount($user_detail['id']);
+$user_follow_count = $user->followCount($user_detail['id']);
+$user_followed_count = $user->followedCount($user_detail['id']);
+echo "<pre>"; var_dump($user_like_count); echo"</pre>";
+echo "<pre>"; var_dump($user_follow_count); echo"</pre>";
+echo "<pre>"; var_dump($user_followed_count); echo"</pre>";
+
 // echo "<pre>"; var_dump($_SESSION); echo"</pre>";
 // echo "<pre>"; var_dump($login_user); echo"</pre>";
 
@@ -21,8 +32,6 @@ if(isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
     $page = 1;
 }
 $start = 5 * ($page - 1);
-$post_count = $post->PostCount($_GET['user_id']);
-
 $posts = $post->getPostsById($start, 5, $user_detail['id']);
 // echo "<pre>"; var_dump($user_detail); echo"</pre>";
 // echo "<pre>"; var_dump($_SESSION); echo"</pre>";
@@ -108,9 +117,9 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
         さんの投稿
         </h2>
         <span>投稿数 : <?php echo $post_count['COUNT(*)']; ?></span>
-        <span>いいね : </span>
-        <span>フォロー : </span>
-        <span>フォロワー : </span>
+        <span>いいね : <?php echo $user_like_count['COUNT(*)']; ?></span>
+        <span>フォロー : <?php echo $user_follow_count['COUNT(*)']; ?></span>
+        <span>フォロワー : <?php echo $user_followed_count['COUNT(*)']; ?></span>
 
         <?php foreach($posts as $post): ?>
             <div class="w-50 mx-auto card my-5 p-4">

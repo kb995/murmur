@@ -68,6 +68,39 @@ class User {
     }
 
 
+    // ライク数取得
+    public static function getLikeCount($user_id) {
+        $dbh = dbConnect();
+        $sql = 'SELECT COUNT(*) FROM likes WHERE user_id = :user_id';
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $like_count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $like_count;
+    }
+
+    // フォロー数取得
+    public static function getFollowCount($user_id) {
+        $dbh = dbConnect();
+        $sql = 'SELECT COUNT(*) FROM follow WHERE follow_id = :user_id';
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $follow_count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $follow_count;
+    }
+
+    // フォロワー数取得
+    public static function getFollowedCount($user_id) {
+        $dbh = dbConnect();
+        $sql = 'SELECT COUNT(*) FROM follow WHERE followed_id = :user_id';
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $followed_count = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $followed_count;
+    }
+
     // ===== CRUD =====
 
     // ユーザー登録

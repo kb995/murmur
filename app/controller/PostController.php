@@ -30,6 +30,8 @@ class PostController {
         return $count =  Post::getPostCount($user_id);
     }
 
+    
+
     // ===== CRUD =====
 
     //　新しい投稿を登録
