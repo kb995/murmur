@@ -23,6 +23,11 @@ class PostController {
         $post = new Post;
         return $post =  Post::getPostsById($start, $count, $user_id);
     }
+    // ライクした投稿を取得
+    public function getPostsByLike($start, $count, $user_id) {
+        $post = new Post;
+        return $post =  Post::getPostsById($start, $count, $user_id);
+    }
 
     // 投稿件数を取得
     public function PostCount($user_id) {

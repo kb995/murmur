@@ -15,9 +15,9 @@ $post_count = $post->PostCount($_GET['user_id']);
 $user_like_count = $user->LikeCount($user_detail['id']);
 $user_follow_count = $user->followCount($user_detail['id']);
 $user_followed_count = $user->followedCount($user_detail['id']);
-echo "<pre>"; var_dump($user_like_count); echo"</pre>";
-echo "<pre>"; var_dump($user_follow_count); echo"</pre>";
-echo "<pre>"; var_dump($user_followed_count); echo"</pre>";
+// echo "<pre>"; var_dump($user_like_count); echo"</pre>";
+// echo "<pre>"; var_dump($user_follow_count); echo"</pre>";
+// echo "<pre>"; var_dump($user_followed_count); echo"</pre>";
 
 // echo "<pre>"; var_dump($_SESSION); echo"</pre>";
 // echo "<pre>"; var_dump($login_user); echo"</pre>";

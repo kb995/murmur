@@ -32,7 +32,7 @@ $my_followed_count = $user->followedCount($login_user['id']);
 // echo "<pre>"; var_dump($my_follow_count); echo"</pre>";
 $posts = $post->getSomePost($start, 5);
 
-echo "<pre>"; var_dump($_POST); echo"</pre>";
+// echo "<pre>"; var_dump($_POST); echo"</pre>";
 
 // 投稿
 if(!empty($_POST) && $_POST['type'] == 'new') {
@@ -61,7 +61,7 @@ if(!empty($_POST) && $_POST['type'] == 'like') {
         $stmt->bindValue(':user_id', $login_user['id'], PDO::PARAM_STR);
         $stmt->bindValue(':post_id', $post_id, PDO::PARAM_STR);
         $result = $stmt->execute();
-    
+
       } catch (Exception $e) {
         error_log('エラー発生:' . $e->getMessage());
       }
@@ -118,7 +118,7 @@ function likes_duplicate($user_id,$post_id){
         <div class="my-3">
             <span>投稿数 : <a href="myPost.php"><?php echo $my_post_count['COUNT(*)']; ?></a></span>
             <span>いいね : <a href="myLike.php"><?php echo $my_like_count['COUNT(*)']; ?></a></span>
-            <span>フォロー : <?php echo $my_follow_count['COUNT(*)']; ?></span>
+            <span>フォロー : <a href="followList.php?location=mypage"><?php echo $my_follow_count['COUNT(*)']; ?></a></span>
             <span>フォロワー : <?php echo $my_followed_count['COUNT(*)']; ?></span>
         </div>
     </div>

@@ -21,6 +21,7 @@ class UserController {
         return $user->getOneUser($user_id);
     }
 
+
     // ライク数を取得
     public function LikeCount($user_id) {
         return $count =  User::getLikeCount($user_id);

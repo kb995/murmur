@@ -118,7 +118,7 @@ function likes_duplicate($user_id,$post_id){
         <a href="editProf.php?login_id=<?php echo $login_user['id']; ?>" type="button" class="btn btn-secondary">プロフィール編集</a>
         <div class="my-3">
             <span>投稿数 : <a href="myPost.php"><?php echo $my_post_count['COUNT(*)']; ?></a></span>
-            <span>いいね : <?php echo $my_like_count['COUNT(*)']; ?></span>
+            <span>いいね : <a href="myLike.php"><?php echo $my_like_count['COUNT(*)']; ?></a></span>
             <span>フォロー : <?php echo $my_follow_count['COUNT(*)']; ?></span>
             <span>フォロワー : <?php echo $my_followed_count['COUNT(*)']; ?></span>
         </div>
