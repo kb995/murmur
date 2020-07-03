@@ -7,8 +7,8 @@ $user = new UserController;
 $post = new PostController;
 
 $post_detail = $post->getPost($_GET['post_id']);
-// echo "<pre>"; var_dump($post_detail['id']); echo"</pre>";
 
+// 編集処理
 if($_POST) {
     $post->edit($post_detail['id']);
 
@@ -40,9 +40,9 @@ if($_POST) {
             <?php endif; ?>
 
             <textarea class="form-control" name="text" cols="30" rows="10"><?php echo $post_detail['text']; ?></textarea>
-        <div class="text-right my-3">
-            <button type="submit" class="btn btn-primary">編集</button>
-        </div>
+            <div class="text-right my-3">
+                <button type="submit" class="btn btn-primary">編集</button>
+            </div>
         </div>
     </form>
     </article>

@@ -5,7 +5,7 @@ class User {
 
     // プロパティ
     public const DEFAULT_IMG = '';
-    
+
     public $user_id;
     public $email;
     public $password;
@@ -13,6 +13,7 @@ class User {
     public $profile;
     public $thumbnail;
 
+    public $count_data = array();
     public $error_msgs = array();
 
     // アクセサメソッド
@@ -56,7 +57,9 @@ class User {
     public function getOneUser($user_id) {
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT * FROM users WHERE id = :user_id AND delete_flg = 0';
+            $sql = 'SELECT * 
+                    FROM users 
+                    WHERE id = :user_id AND delete_flg = 0';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
@@ -71,7 +74,9 @@ class User {
     // ライク数取得
     public static function getLikeCount($user_id) {
         $dbh = dbConnect();
-        $sql = 'SELECT COUNT(*) FROM likes WHERE user_id = :user_id';
+        $sql = 'SELECT COUNT(*) 
+                FROM likes 
+                WHERE user_id = :user_id';
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -82,7 +87,9 @@ class User {
     // フォロー数取得
     public static function getFollowCount($user_id) {
         $dbh = dbConnect();
-        $sql = 'SELECT COUNT(*) FROM follow WHERE follow_id = :user_id';
+        $sql = 'SELECT COUNT(*) 
+                FROM follow 
+                WHERE follow_id = :user_id';
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -93,7 +100,9 @@ class User {
     // フォロワー数取得
     public static function getFollowedCount($user_id) {
         $dbh = dbConnect();
-        $sql = 'SELECT COUNT(*) FROM follow WHERE followed_id = :user_id';
+        $sql = 'SELECT COUNT(*) 
+                FROM follow 
+                WHERE followed_id = :user_id';
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -108,21 +117,21 @@ class User {
         try {
             $dbh = dbConnect();
             $dbh->beginTransaction();
-            $sql = 'INSERT INTO users (email, password, name, created_at, updated_at) VALUE (:email, :password, :name, :created_at, :updated_at)';
+            $sql = 'INSERT INTO users (email, password, name, created_at, updated_at) 
+                    VALUE (:email, :password, :name, :created_at, :updated_at)';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
             $stmt->bindValue(':password', password_hash($this->password, PASSWORD_DEFAULT), PDO::PARAM_STR);
             $stmt->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-
             $result = $stmt->execute();
             $dbh->commit();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             $dbh->rollBack();
             echo 'DB接続エラー発生 : ' . $e->getMessage();
-            $error_msg['etc'] = 'しばらくしてから再度試してください';
+            $error_msgs['etc'] = 'しばらくしてから再度試してください';
         }
     }
 
@@ -131,7 +140,9 @@ class User {
         try {
             $dbh = dbConnect();
             $dbh->beginTransaction();
-            $sql = 'UPDATE users SET email = :email, name = :name, profile = :profile, updated_at = :updated_at WHERE id = :user_id';
+            $sql = 'UPDATE users 
+                    SET email = :email, name = :name, profile = :profile, updated_at = :updated_at 
+                    WHERE id = :user_id';
 
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
@@ -155,7 +166,10 @@ class User {
     public function authUser($email, $password) {
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT id,email,password FROM users WHERE email = :email AND delete_flg = 0';
+            $sql = 'SELECT id,email,password 
+                    FROM users 
+                    WHERE email = :email 
+                    AND delete_flg = 0';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $stmt->execute();

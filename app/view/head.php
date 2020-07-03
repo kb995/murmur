@@ -8,6 +8,6 @@
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <title>MurMur</title>
+    <title><?php echo $pageTitle; ?> | MurMur</title>
 </head>
 <body>

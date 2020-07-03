@@ -1,17 +1,20 @@
 <?php
 require_once('../controller/UserController.php');
 
+$pageTitle = 'ログイン';
+
+// ログイン処理
 if($_POST) {
     $controller = new UserController;
     $controller->login();
-    header("Location: mypage.php");
-
-
+    
     if(!empty($_SESSION['error_msgs'])) {
         $error_msgs = $_SESSION['error_msgs'];
         unset($_SESSION['error_msgs']);
     }
 }
+
+
 ?>
 
 <?php require_once('head.php'); ?>
@@ -19,7 +22,7 @@ if($_POST) {
 
 <main class="container">
     <form class="w-50 mx-auto" method="post" action="">
-        <h1 class="h3 text-center my-4">LOGIN</h1>
+        <h1 class="h3 text-center my-5">LOGIN</h1>
 
         <!-- エラー表示 -->
         <?php if(!empty($error_msgs)): ?>
@@ -33,19 +36,16 @@ if($_POST) {
         <?php endif; ?>
 
         <div class="form-controll my-4">
-            <label class="control-label" for="">E-mail<span class="badge badge-danger ml-2">必須</span></label>
-            <input class="form-control" type="email" name="email" value="<?php if(!empty($_POST['email'])) echo $_POST['email']; ?>">
+            <label class="control-label" for="">メールアドレス<span class="badge badge-danger ml-2">必須</span></label>
+            <input class="form-control" type="email" required name="email" value="<?php if(!empty($_POST['email'])) echo $_POST['email']; ?>">
         </div>
         <div class="form-controll my-4">
-            <label class="control-label" for="">Password<span class="badge badge-danger ml-2">必須</span></label>
-            <input class="form-control" type="password" name="password" value="<?php if(!empty($_POST['password'])) echo $_POST['password']; ?>">
+            <label class="control-label" for="">パスワード<span class="badge badge-danger ml-2">必須</span></label>
+            <input class="form-control" type="password" required name="password" value="<?php if(!empty($_POST['password'])) echo $_POST['password']; ?>">
         </div>
-        <!-- <div class="form-controll">
-            <label class="control-label" for="">Password:Re<span class="badge badge-danger ml-4">必須</span></label>
-            <input class="form-control" type="password" name="password_re" value="<?php  // if(!empty($_POST['password_re'])) echo $_POST['password_re']; ?>">
-        </div> -->
+
         <div class="text-right my-3">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">送信</button>
         </div>
     </form>
 </main>

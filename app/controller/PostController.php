@@ -35,7 +35,6 @@ class PostController {
         return $count =  Post::getPostCount($user_id);
     }
 
-    
 
     // ===== CRUD =====
 
@@ -60,25 +59,23 @@ class PostController {
             $post->setText($text);
             $post->setUserId($_SESSION['login_user']['id']);
             $post->save();
+            header("Location: mypage.php");
         }
     }
 
     // 投稿を削除
     public function delete() {
-        $post_id = $_GET['post_id'];
+        $post_id = $_POST['post_id'];
 
-        $post = Post::getOnePost($post_id);
-        echo "<pre>"; var_dump($post); echo"</pre>";
-        if(!isset($post)) {
-            header('Location: index.php');
-        }
+        // $post = Post::getOnePost($post_id);
         $post = new Post;
         $post->setId($post_id);
         $result = $post->delete();
         if($result === false) {
             $_SESSION['error_msgs'] = '削除に失敗しました';
         }
-        header('Location: index.php');
+        header('Location: mypage.php');
+
     }
 
     //　投稿を編集
@@ -102,6 +99,7 @@ class PostController {
             $post = new Post;
             $post->setText($text);
             $post->update($post_id);
+            header("Location: mypage.php");
         }
     }
 }

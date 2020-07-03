@@ -83,9 +83,11 @@ class Post {
     }
 
     // 投稿数取得
-    public static function getPostCount($user_id) {
+    public function getPostCount($user_id) {
         $dbh = dbConnect();
-        $sql = 'SELECT COUNT(*) FROM posts WHERE delete_flg = 0 AND user_id = :user_id';
+        $sql = 'SELECT COUNT(*)
+                FROM posts
+                WHERE delete_flg = 0 AND user_id = :user_id';
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -100,7 +102,8 @@ class Post {
         try {
             $dbh = dbConnect();
             $dbh->beginTransaction();
-            $sql = 'INSERT INTO posts ( text, user_id, created_at, updated_at ) VALUE (:text, :user_id,:created_at, :updated_at)';
+            $sql = 'INSERT INTO posts ( text, user_id, created_at, updated_at ) 
+                    VALUE (:text, :user_id,:created_at, :updated_at)';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':text', $this->text, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
@@ -121,7 +124,9 @@ class Post {
         try {
             $dbh = dbConnect();
             $dbh->beginTransaction();
-            $sql = 'UPDATE posts SET delete_flg = 1, updated_at = :updated_at WHERE id = :post_id';
+            $sql = 'UPDATE posts 
+                    SET delete_flg = 1, updated_at = :updated_at 
+                    WHERE id = :post_id';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_STR);
@@ -139,7 +144,9 @@ class Post {
         try {
             $dbh = dbConnect();
             $dbh->beginTransaction();
-            $sql = 'UPDATE posts SET text = :text, updated_at = :updated_at WHERE id = :post_id';
+            $sql = 'UPDATE posts 
+                    SET text = :text, updated_at = :updated_at 
+                    WHERE id = :post_id';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':text', $this->text, PDO::PARAM_STR);
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);

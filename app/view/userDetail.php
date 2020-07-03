@@ -3,24 +3,24 @@
 
 require_once('../controller/UserController.php');
 require_once('../controller/PostController.php');
+require_once('../controller/LikeController.php');
+require_once('../config/app.php');
 
 $user = new UserController;
 $post = new PostController;
+$like = new LikeController;
 
-// データ取得
+$pageTitle = 'ユーザー詳細';
+
+// 認証
+$user->loginLimit();
+
+// ユーザーデータ取得
 $login_user = $user->getUser($_SESSION['login_user']['id']);
 $user_detail = $user->getUser($_GET['user_id']);
 
-$post_count = $post->PostCount($_GET['user_id']);
-$user_like_count = $user->LikeCount($user_detail['id']);
-$user_follow_count = $user->followCount($user_detail['id']);
-$user_followed_count = $user->followedCount($user_detail['id']);
-// echo "<pre>"; var_dump($user_like_count); echo"</pre>";
-// echo "<pre>"; var_dump($user_follow_count); echo"</pre>";
-// echo "<pre>"; var_dump($user_followed_count); echo"</pre>";
-
-// echo "<pre>"; var_dump($_SESSION); echo"</pre>";
-// echo "<pre>"; var_dump($login_user); echo"</pre>";
+// カウントデータ取得
+$count_data = $user->countData($user_detail['id']);
 
 // ログイン有効期限チェック
 $user->loginLimit();
@@ -33,45 +33,13 @@ if(isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
 }
 $start = 5 * ($page - 1);
 $posts = $post->getPostsById($start, 5, $user_detail['id']);
-// echo "<pre>"; var_dump($user_detail); echo"</pre>";
-// echo "<pre>"; var_dump($_SESSION); echo"</pre>";
 
 
-// フォロー機能
-function check_follow($follow_user, $followed_user) {
-    try {
-        $dbh = dbConnect();
-        $sql = 'SELECT follow_id,followed_id FROM follow WHERE follow_id = :follow_id AND followed_id = :followed_id';
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':follow_id', $follow_user, PDO::PARAM_INT);
-        $stmt->bindValue(':followed_id', $followed_user, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result;
-        
-    } catch (PDOException $e) {
-        echo 'DB接続エラー発生 : ' . $e->getMessage();
-        $this->error_msgs[] = 'しばらくしてから再度試してください';
-    }
-}
-
+// フォロー処理
 if(!empty($_POST) && $_POST['type'] === 'follow') {
-    if(check_follow($login_user['id'], $user_detail['id'])) {
-        $sql ='DELETE FROM follow WHERE :follow_id = follow_id AND :followed_id = followed_id';
-    }else{
-        $sql ='INSERT INTO follow(follow_id,followed_id) VALUES(:follow_id,:followed_id)';
-    }
-    try {
-        $dbh = dbConnect();
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':follow_id', $login_user['id'], PDO::PARAM_INT);
-        $stmt->bindValue(':followed_id', $user_detail['id'], PDO::PARAM_INT);
-        $stmt->execute();
-    } catch (PDOException $e) {
-        echo 'DB接続エラー発生 : ' . $e->getMessage();
-        $this->error_msgs[] = 'しばらくしてから再度試してください';
-    }
+    $user->follow($login_user['id'], $user_detail['id']);
 }
+
 
 ?>
 
@@ -88,21 +56,31 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
     ?>
     さんのページ
     </h2>
-    <div class="card p-5 my-5">
-        <p><?php echo $user_detail['id'] ?></p>
-        <p><?php echo $user_detail['email'] ?></p>
-        <p><?php echo $user_detail['password'] ?></p>
-        <p><?php echo $user_detail['created_at'] ?></p>
+
+    <!-- プロフカード -->
+    <h2 class="text-center h4 text-muted my-5">プロフィール</h2>
+    <div class="card p-5 my-5 w-50 mx-auto">
+        <p><?php echo $user_detail['id']; ?></p>
+        <p><?php echo $user_detail['name']; ?></p>
+        <p><?php echo $user_detail['email']; ?></p>
         
         <!-- フォローボタン -->
         <form action="" method="post">
             <input type="hidden" name="type" value="follow">
-            <?php if(check_follow($login_user['id'], $user_detail['id'])) : ?>
+            <?php if($user->check_follow($login_user['id'], $user_detail['id'])) : ?>
                 <button class="btn btn-secondary" name="follow" type="submit">フォロー済み</button>
             <?php else : ?>
                <button class="btn btn-primary" name="follow" type="submit">フォロー</button>
             <?php endif; ?>
         </form>
+
+        <!-- カウントデータ -->
+        <div class="my-3">
+            <span>投稿数 : <a href="myPost.php"><?php echo $count_data['post']['COUNT(*)']; ?></a></span>
+            <span>いいね : <a href="myLike.php"><?php echo $count_data['like']['COUNT(*)']; ?></a></span>
+            <span>フォロー : <a href="followList.php?location=mypage"><?php echo $count_data['follow']['COUNT(*)']; ?></a></span>
+            <span>フォロワー : <?php echo $count_data['followed']['COUNT(*)']; ?></span>
+        </div>
     </div>
 
     <article>
@@ -116,10 +94,6 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
         ?>
         さんの投稿
         </h2>
-        <span>投稿数 : <?php echo $post_count['COUNT(*)']; ?></span>
-        <span>いいね : <?php echo $user_like_count['COUNT(*)']; ?></span>
-        <span>フォロー : <?php echo $user_follow_count['COUNT(*)']; ?></span>
-        <span>フォロワー : <?php echo $user_followed_count['COUNT(*)']; ?></span>
 
         <?php foreach($posts as $post): ?>
             <div class="w-50 mx-auto card my-5 p-4">
@@ -130,8 +104,10 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
             </div>
         <?php endforeach; ?>
     </article>
+
 <!-- ページング -->
 <?php require_once('paging.php'); ?>
+
 </main>
 
 <?php require_once('footer.php'); ?>

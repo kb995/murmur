@@ -1,6 +1,7 @@
 <?php
 require_once('../config/app.php');
 require_once('../model/User.php');
+require_once('../controller/PostController.php');
 require_once('../validation/UserValidation.php');
 
 
@@ -21,18 +22,17 @@ class UserController {
         return $user->getOneUser($user_id);
     }
 
+    // カウントデータ取得
+    public function countData($user_id) {
+        $user = new User;
+        $post = new Post;
 
-    // ライク数を取得
-    public function LikeCount($user_id) {
-        return $count =  User::getLikeCount($user_id);
-    }
-    // フォロー数取得
-    public function followCount($user_id) {
-        return $count =  User::getFollowCount($user_id);
-    }
-    // フォロワー数取得
-    public function followedCount($user_id) {
-        return $count =  User::getFollowedCount($user_id);
+        $user->count_data['post'] = $post->getPostCount($user_id);
+        $user->count_data['like'] = $user->getLikeCount($user_id);
+        $user->count_data['follow'] = $user->getFollowCount($user_id);
+        $user->count_data['followed'] = $user->getFollowedCount($user_id);
+        
+        return $user->count_data;
     }
 
     // ===== CRUD =====
@@ -56,10 +56,12 @@ class UserController {
         $user->setName($data['name']);
         $user->setPassword($data['password']);
         $user->save();
+        header("Location: mypage.php");
+
         }
     }
 
-    //　プロフプロフィールを更新する
+    //　プロフィールを更新する
     public function edit($user_id) {
         $validation = new UserValidation;
         $data = [
@@ -105,9 +107,7 @@ class UserController {
             $user->setEmail($data['email']);
             $user->setPassword($data['password']);
             $user->authUser($data['email'], $data['password']);
-
-            if($_SESSION['login_flg']) {
-            }
+            header("Location: mypage.php");
         }
     }
 
@@ -122,7 +122,7 @@ class UserController {
             } else {
                 $_SESSION['login_date'] = time();
                 if(basename($_SERVER['PHP_SELF']) === 'login.php'){
-                    header("Location: index.php");
+                    header("Location: mypage.php");
                   }
             }
         } else {
@@ -130,6 +130,44 @@ class UserController {
         }
     }
 
-    
+    // ===== フォロー機能 =====
+    public function follow($login_user, $user_detail) {
+        if($this->check_follow($login_user, $user_detail)) {
+            $sql ='DELETE FROM follow 
+                   WHERE :follow_id = follow_id AND :followed_id = followed_id';
+        }else{
+            $sql ='INSERT INTO follow(follow_id,followed_id) 
+                   VALUES(:follow_id,:followed_id)';
+        }
+        try {
+            $dbh = dbConnect();
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':follow_id', $login_user, PDO::PARAM_INT);
+            $stmt->bindValue(':followed_id', $user_detail, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo 'DB接続エラー発生 : ' . $e->getMessage();
+            $this->error_msgs[] = 'しばらくしてから再度試してください';
+        }
+    }
 
+    // フォローチェック
+    public function check_follow($follow_user, $followed_user) {
+        try {
+            $dbh = dbConnect();
+            $sql = 'SELECT follow_id,followed_id
+                    FROM follow 
+                    WHERE follow_id = :follow_id AND followed_id = :followed_id';
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':follow_id', $follow_user, PDO::PARAM_INT);
+            $stmt->bindValue(':followed_id', $followed_user, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+            
+        } catch (PDOException $e) {
+            echo 'DB接続エラー発生 : ' . $e->getMessage();
+            $this->error_msgs[] = 'しばらくしてから再度試してください';
+        }
+}
 }

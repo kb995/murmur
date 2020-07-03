@@ -8,6 +8,10 @@ $post = new PostController;
 
 $post_detail = $post->getPost($_GET['post_id']);
 
+//削除処理
+if( !empty($_POST['type']) && $_POST['type'] === 'delete') {
+    $post->delete();
+}
 ?>
 
 <?php require('head.php'); ?>
@@ -19,8 +23,16 @@ $post_detail = $post->getPost($_GET['post_id']);
         <div class="w-50 mx-auto card my-3 p-3">
             <p><?php echo $post_detail['id'] ?></p>
             <p><?php echo $post_detail['text'] ?></p>
-        <button class="delete_btn btn btn-danger" data-id="<?php echo $post_detail['id']; ?>">削除</button>
-        <a href="editPost.php?post_id=<?php echo $post_detail['id']; ?>" type="button" class="btn btn-primary">編集</a>
+
+            <div class="row">
+                    <form action="" method="post">
+                        <input type="hidden" name="type" value="delete">
+                        <input type="hidden" name="post_id" value="<?php echo $post_detail['id']; ?>">
+                        <input class="btn btn-danger my-3" type="submit" value="削除">
+                        <a href="editPost.php?post_id=<?php echo $post_detail['id']; ?>" class="btn btn-secondary">編集</a>
+                    </form>
+            </div>
+    
         </div>
 
     </article>
