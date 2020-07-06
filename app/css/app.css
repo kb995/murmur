@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'dot';
+  src: url("../../font/PixelMplus10-Regular.ttf");
+}
+
+body {
+  outline: none;
+  font-family: "dot";
+  background-color: #121212;
+  overflow-y: scroll;
+  color: #fff;
+}
+
+body header {
+  background-color: #ebebeb;
+}
+
+body header .nav-link {
+  color: #000;
+}
+
+body header .nav-link:hover {
+  -webkit-transform: translateY(-3px);
+          transform: translateY(-3px);
+  -webkit-transition: .5s;
+  transition: .5s;
+  border-bottom: 2px solid blue;
+}
+
+body header .logo .navbar-brand {
+  text-decoration: none;
+  color: #121212;
+}
+
+body .card {
+  background-color: #121212;
+  border: solid 3px #fff;
+}
+
+body .border-w {
+  border: solid 3px #fff;
+}
+
+body .btn-white {
+  border: solid 3px #fff;
+  color: white;
+}
+
+body .count_btn:hover {
+  text-decoration: none;
+  background-color: wheat;
+  -webkit-transition: .5s;
+  transition: .5s;
+  border-radius: 6px;
+}
+/*# sourceMappingURL=app.css.map */

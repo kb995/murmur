@@ -1,0 +1,51 @@
+
+  @font-face {
+    font-family: 'dot';
+    src: url("../../font/PixelMplus10-Regular.ttf");
+  }
+
+  body {
+    outline: none;
+    font-family: "dot";
+    background-color: #121212;
+    overflow-y: scroll;
+    color: #fff;
+
+    header {
+        background-color: #ebebeb;
+
+        .nav-link {
+            color: #000;
+            &:hover {
+                transform: translateY(-3px);
+                transition: .5s;
+                border-bottom: 2px solid blue;
+            }
+        }
+
+        .logo .navbar-brand {
+            text-decoration: none;
+            color: #121212;
+
+        }
+    }
+
+    .card {
+        background-color: #121212;
+        border: solid 3px #fff;
+    }
+    .border-w {
+        border: solid 3px #fff;
+    }
+    .btn-white {
+        border: solid 3px #fff;
+        color: white;
+    }
+     
+    .count_btn:hover {
+        text-decoration: none;
+        background-color: wheat;
+        transition: .5s;
+        border-radius: 6px;
+    }
+}

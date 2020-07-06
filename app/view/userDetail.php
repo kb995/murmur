@@ -77,7 +77,7 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
         <!-- カウントデータ -->
         <div class="my-3">
             <span>投稿数 : <a href="myPost.php"><?php echo $count_data['post']['COUNT(*)']; ?></a></span>
-            <span>いいね : <a href="myLike.php"><?php echo $count_data['like']['COUNT(*)']; ?></a></span>
+            <span>いいね : <a href="likeList.php?location=other&user_id=<?php echo $user_detail['id']; ?>"><?php echo $count_data['like']['COUNT(*)']; ?></a></span>
             <span>フォロー : <a href="followList.php?location=mypage"><?php echo $count_data['follow']['COUNT(*)']; ?></a></span>
             <span>フォロワー : <?php echo $count_data['followed']['COUNT(*)']; ?></span>
         </div>

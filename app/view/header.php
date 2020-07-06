@@ -1,9 +1,9 @@
-<header class="header bg-light sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-light container">
-        <h1>
+<header class="header">
+    <nav class="navbar navbar-expand-lg container">
+        <h1 class="logo">
             <a class="navbar-brand" href="mypage.php">
                 <i class="fa fa-comments pl-2" aria-hidden="true"></i>
-                BBS
+                MURMUR
             </a>
         </h1>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

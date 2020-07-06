@@ -1,6 +1,5 @@
 <?php
 require_once('../model/Like.php');
-// require_once('../validation/LikeValidation.php');
 
 class LikeController {
 

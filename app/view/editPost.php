@@ -5,6 +5,8 @@ require_once('../controller/PostController.php');
 
 $user = new UserController;
 $post = new PostController;
+$pageTitle = '投稿編集';
+
 
 $post_detail = $post->getPost($_GET['post_id']);
 

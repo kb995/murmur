@@ -68,7 +68,36 @@ class Post {
     public static function getPostsById($start, $count, $user_id) {
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT users.name, posts.id, posts.user_id, posts.text, posts.created_at FROM posts JOIN users ON posts.user_id = users.id WHERE users.delete_flg = 0 AND posts.delete_flg = 0 AND posts.user_id = :user_id ORDER BY posts.created_at DESC LIMIT :start, :count';
+            $sql = 'SELECT users.name, posts.id, posts.user_id, posts.text, posts.created_at
+                    FROM posts 
+                    JOIN users ON posts.user_id = users.id 
+                    WHERE users.delete_flg = 0 AND posts.delete_flg = 0 
+                    AND posts.user_id = :user_id 
+                    LIMIT :start, :count';
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':start', $start, PDO::PARAM_INT);
+            $stmt->bindValue(':count', $count, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo '例外エラー発生 : ' . $e->getMessage();
+            $err_msg['etc'] = 'しばらくしてから再度試してください';
+        }
+        return $result;
+    }
+
+    // ライクしている記事を取得
+    public function getLikePost($start, $count, $user_id) {
+        try {
+            $dbh = dbConnect();
+            $sql = 'SELECT posts.id, posts.text, posts.created_at
+                    FROM posts
+                    JOIN likes ON posts.id = likes.post_id
+                    WHERE posts.delete_flg = 0
+                    AND likes.user_id = :user_id
+                    LIMIT :start, :count';
+
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':start', $start, PDO::PARAM_INT);
             $stmt->bindValue(':count', $count, PDO::PARAM_INT);

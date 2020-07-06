@@ -5,6 +5,7 @@ require_once('../controller/PostController.php');
 
 $user = new UserController;
 $post = new PostController;
+$pageTitle = '投稿詳細';
 
 $post_detail = $post->getPost($_GET['post_id']);
 

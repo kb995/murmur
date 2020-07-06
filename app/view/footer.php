@@ -1,6 +1,5 @@
 
-    <footer class="footer py-2 text-center bg-light fixed-bottom">
-    copyright
+    <footer>
     </footer>
 </body>
 
