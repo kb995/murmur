@@ -49,9 +49,10 @@ body .btn-white {
 
 body .count_btn:hover {
   text-decoration: none;
-  background-color: wheat;
-  -webkit-transition: .5s;
-  transition: .5s;
+  background-color: skyblue;
+  color: #fff;
+  -webkit-transition: .2s;
+  transition: .2s;
   border-radius: 6px;
 }
 /*# sourceMappingURL=app.css.map */
