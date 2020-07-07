@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 
 require_once('../controller/UserController.php');
 require_once('../controller/PostController.php');
@@ -6,7 +7,6 @@ require_once('../controller/PostController.php');
 $user = new UserController;
 $post = new PostController;
 $login_user = $user->getUser($_SESSION['login_user']['id']);
-echo "<pre>"; var_dump($login_user); echo"</pre>";
 
 if($_POST) {
     $user->edit($login_user['id']);
@@ -18,8 +18,8 @@ if($_POST) {
 }
 ?>
 
-<?php require('head.php'); ?>
-<?php require('header.php'); ?>
+<?php require('../view/common/head.php'); ?>
+<?php require('../view/common/header.php'); ?>
 
 <main class="container my-5">
     <form class="w-50 mx-auto" method="post" action="">
@@ -36,10 +36,10 @@ if($_POST) {
                 </div>
             <?php endif; ?>
 
-            <!-- <div class="form-controll my-4">
-                <label class="control-label" for="">サムネイル</label>
-                <input class="form-control" type="text" name="name" value="<?php // echo $login_user['name']; ?>">
-            </div> -->
+            <div class="form-controll my-4">
+                <div style="width:150px;height:200px;background-color:gray;"></div>
+                <label class="control-label mt-2" for="">サムネイル</label>
+            </div>
             <div class="form-controll my-4">
                 <label class="control-label" for="">名前</label>
                 <input class="form-control" type="text" name="name" value="<?php echo $login_user['name']; ?>">
@@ -50,7 +50,8 @@ if($_POST) {
             </div>
             <div class="form-controll my-4">
                 <label class="control-label" for="">プロフィール文</label>
-                <input class="form-control" type="text" name="profile" value="<?php echo $login_user['profile']; ?>">
+                <textarea class="form-control" name="profile" cols="5" rows="5"><?php echo $login_user['profile']; ?></textarea>
+
             </div>
 
             <div class="text-right my-3">
@@ -59,4 +60,4 @@ if($_POST) {
         </div>
     </form></main>
 
-<?php require_once('footer.php'); ?>
+<?php require_once('../view/common/footer.php'); ?>

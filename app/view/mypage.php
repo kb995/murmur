@@ -50,59 +50,52 @@ if(!empty($_POST) && $_POST['type'] == 'like') {
 
 ?>
 
-<?php require('head.php'); ?>
-<?php require('header.php'); ?>
+<?php require('../view/common/head.php'); ?>
+<?php require('../view/common/header.php'); ?>
 
 <main class="container mb-5">
     <h1 class="text-center my-5">mypage</h1>
     <div class="row">
         <div class="col-4">
             <!-- プロフィールカード -->
-            <?php require_once('../view/profCard.php'); ?>
+            <?php require_once('../view/common/profCard.php'); ?>
             <!-- 投稿フォーム -->
-            <?php require_once('../view/form.php'); ?>
+            <?php require_once('../view/common/form.php'); ?>
         </div>
 
         <div class="col-8">
             <!-- タイムライン -->
             <section class="border-w p-2">
                 <h2 class="text-center h3 my-3">全体タイムライン</h2>
-                    <?php foreach($posts as $post): ?>
-                        <div class="mx-auto card my-3 p-4">
-                            <div class="thumb" style="background:white; width:50px; height:50px;"></div>
-                            <p class="pt-2"><a href="userDetail.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></p>
-                            <div class="row">
-                                <!-- いいね -->
-                                <form action="" method="post" style="backgroud-color:black;">
-                                    <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
-                                    <button type="submit" name="type" value="like" class="like_btn text-danger border border-0 pl-3 pr-0" style="background-color:black;">
-                                        <?php if (!$like->likeDuplicate($login_user['id'], $post['id'])): ?>
-                                            <i class="far fa-heart"></i>
-                                        <?php else: ?>
-                                            <i class="fas fa-heart"></i>
-                                        <?php endif; ?>
-                                    </button>
-                                    <span>
-                                        <?php
-                                        $count = $like->getLikeCount($post['id']);
-                                        echo $count[0];
-                                        ?>
-                                    </span>
-                                </form>
-                                <span class="ml-auto pr-3"><?php echo $post['created_at']; ?></span>
-                            </div>
-                            <div style="border: solid 1px white;" class="my-2"></div>
-                            <p class="p-3"><?php echo $post['text']; ?></a></p>
+                <?php foreach($posts as $post): ?>
+                    <div class="mx-auto card my-3 p-4">
+                        <div class="thumb" style="background:white; width:50px; height:50px;"></div>
+                        <p class="pt-2"><a href="userDetail.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></p>
+                        <div class="row">
+                            <!-- いいね -->
+                            <?php require('../view/common/like.php'); ?>
+                            <!-- 編集 -->
+                            <a class="px-5" href="editPost.php?post_id=<?php echo $post['id']; ?>">
+                                <i class="fas fa-edit text-white"></i>
+                                <span class="text-white">編集</span>
+                            </a>
+                            <!-- 削除 -->
+                            <a class="mr-auto" href="#">
+                                <i class="fas fa-trash-alt text-white"></i>
+                                <span class="text-white">削除</span>
+                            </a>
+                            <span class="ml-auto pr-3"><?php echo $post['created_at']; ?></span>
                         </div>
-                    <?php endforeach; ?>
-                </section>
-                
-                <!-- ページング -->
-                <?php require_once('paging.php'); ?>
-            </div>
+                        <div style="border: solid 1px white;" class="my-2"></div>
+                        <p class="p-3"><?php echo $post['text']; ?></a></p>
+                    </div>
+                <?php endforeach; ?>
+            </section>
+
+            <!-- ページング -->
+            <?php require_once('../view/common/paging.php'); ?>
+        </div>
     </div>
-
-
 </main>
 
-<?php require_once('footer.php'); ?>
+<?php require_once('../view/common/footer.php'); ?>

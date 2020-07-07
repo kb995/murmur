@@ -26,12 +26,12 @@ if( !empty($_POST['type']) && $_POST['type'] === 'delete') {
             <p><?php echo $post_detail['text'] ?></p>
 
             <div class="row">
-                    <form action="" method="post">
-                        <input type="hidden" name="type" value="delete">
-                        <input type="hidden" name="post_id" value="<?php echo $post_detail['id']; ?>">
-                        <input class="btn btn-danger my-3" type="submit" value="削除">
-                        <a href="editPost.php?post_id=<?php echo $post_detail['id']; ?>" class="btn btn-secondary">編集</a>
-                    </form>
+                <form action="" method="post">
+                    <input type="hidden" name="type" value="delete">
+                    <input type="hidden" name="post_id" value="<?php echo $post_detail['id']; ?>">
+                    <input class="btn btn-danger my-3" type="submit" value="削除">
+                    <a href="editPost.php?post_id=<?php echo $post_detail['id']; ?>" class="btn btn-secondary">編集</a>
+                </form>
             </div>
     
         </div>

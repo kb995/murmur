@@ -17,8 +17,8 @@ if($_POST) {
 
 ?>
 
-<?php require_once('head.php'); ?>
-<?php require_once('header.php'); ?>
+<?php require_once('../view/common/head.php'); ?>
+<?php require_once('../view/common/header.php'); ?>
 
 <main class="container">
     <form class="w-50 mx-auto" method="post" action="">
@@ -50,4 +50,4 @@ if($_POST) {
     </form>
 </main>
 
-<?php require_once('footer.php'); ?>
+<?php require_once('../view/common/footer.php'); ?>

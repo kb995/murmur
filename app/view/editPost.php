@@ -7,7 +7,7 @@ $user = new UserController;
 $post = new PostController;
 $pageTitle = '投稿編集';
 
-
+// ポストID
 $post_detail = $post->getPost($_GET['post_id']);
 
 // 編集処理
@@ -22,8 +22,8 @@ if($_POST) {
 
 ?>
 
-<?php require('head.php'); ?>
-<?php require('header.php'); ?>
+<?php require('../view/common/head.php'); ?>
+<?php require('../view/common/header.php'); ?>
 
 <main class="container">
     <article>
@@ -50,4 +50,4 @@ if($_POST) {
     </article>
 </main>
 
-<?php require_once('footer.php'); ?>
+<?php require_once('../view/common/footer.php'); ?>

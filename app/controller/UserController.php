@@ -85,6 +85,7 @@ class UserController {
             $user->setEmail($email);
             $user->setProfile($profile);
             $user->update($user_id);
+            header("Location: mypage.php");
         }
     }
 
@@ -132,7 +133,7 @@ class UserController {
 
     // ===== フォロー機能 =====
     public function follow($login_user, $user_detail) {
-        if($this->check_follow($login_user, $user_detail)) {
+        if(check_follow($login_user, $user_detail)) {
             $sql ='DELETE FROM follow 
                    WHERE :follow_id = follow_id AND :followed_id = followed_id';
         }else{

@@ -48,13 +48,7 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
 
 <main class="container my-5">
     <h2 class="text-center h3">
-    <?php if(empty($user_detail['name'])) {
-        echo '名無し';
-    } else {
-        echo $user_detail['name'];
-    }
-    ?>
-    さんのページ
+        <?php if(empty($user_detail['name'])) { echo '名無し'; } else { echo $user_detail['name']; } ?>さんのページ
     </h2>
 
     <!-- プロフカード -->
@@ -85,14 +79,7 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
 
     <article>
         <h2 class="text-center h3">
-        <?php
-        if(empty($user_detail['name'])) {
-            echo '名無し';
-        } else {
-            echo $user_detail['name'];
-        }
-        ?>
-        さんの投稿
+            <?php if(empty($user_detail['name'])) { echo '名無し'; } else { echo $user_detail['name']; } ?> さんの投稿
         </h2>
 
         <?php foreach($posts as $post): ?>
