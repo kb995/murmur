@@ -39,6 +39,7 @@ body .card {
 
 body .border-w {
   border: solid 3px #fff;
+  border-radius: 5px;
 }
 
 body .btn-white {
