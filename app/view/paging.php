@@ -1,8 +1,10 @@
-<div class="text-center">
+<p class="text-center py-4">
     <?php if($page >= 2): ?>
-        <a class="pl-5 paging" href="mypage?page=<?php echo $page - 1; ?>">
-         &lt; <?php echo $page - 1; ?> ページ目
-        </a>
+        <div class="text-left">
+            <a class="pl-5 paging" href="mypage?page=<?php echo $page - 1; ?>">
+             &lt; <?php echo $page - 1; ?> ページ目
+            </a>
+        </div>
     <?php endif; ?>
     <?php
         $dbh = dbConnect();
@@ -14,8 +16,10 @@
         $max_page = ceil($page_count['COUNT(*)'] / 5);
         if($page < $max_page):
     ?>
-    <a class="pl-5 paging" href="mypage?page=<?php echo $page + 1; ?>">
-        <?php echo $page + 1; ?> ページ目 &gt;
-    </a>
+    <div class="text-right">
+        <a class="pl-5 paging" href="mypage?page=<?php echo $page + 1; ?>">
+            <?php echo $page + 1; ?> ページ目 &gt;
+        </a>
+    </div>
     <?php endif; ?>
-</div>
+</p>
