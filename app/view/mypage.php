@@ -70,7 +70,7 @@ if(!empty($_POST) && $_POST['type'] == 'like') {
                 <?php foreach($posts as $post): ?>
                     <div class="mx-auto card my-3 p-4">
                         <div class="thumb" style="background:white; width:50px; height:50px;"></div>
-                        <p class="pt-2"><a href="userDetail.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></p>
+                        <p class="pt-2"><a href="postList.php?page=other&user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></p>
                         <div class="row">
                             <!-- いいね -->
                             <?php require('../view/common/like.php'); ?>

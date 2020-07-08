@@ -8,7 +8,7 @@
     <a href="editProf.php?login_id=<?php echo $login_user['id']; ?>" type="button" class="btn btn-white mb-4">プロフィール編集</a>
 
     <div class="my-3 row">
-        <a class="col-6 block count_btn" href="myPost.php">
+        <a class="col-6 block count_btn" href="postList.php?page=self">
             <p class="text-center text-muted">投稿数</p>
             <p class="text-center h4"><?php echo $count_data['post']['COUNT(*)']; ?></p>
         </a>

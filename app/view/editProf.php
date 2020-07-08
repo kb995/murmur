@@ -51,9 +51,7 @@ if($_POST) {
             <div class="form-controll my-4">
                 <label class="control-label" for="">プロフィール文</label>
                 <textarea class="form-control" name="profile" cols="5" rows="5"><?php echo $login_user['profile']; ?></textarea>
-
             </div>
-
             <div class="text-right my-3">
                 <button type="submit" class="btn btn-primary">編集</button>
             </div>
