@@ -26,11 +26,11 @@ if(isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
 $start = 5 * ($page - 1);
 
 // 取得記事を条件で変える
-if($_GET['location'] === 'mypage') {
+if($_GET['page'] === 'mypage') {
     $current_user = $user->getUser($login_user['id']);
     $posts = $post->getLikePost($start, 5, $current_user['id']);
 
-}elseif ($_GET['location'] === 'other'){
+}elseif ($_GET['page'] === 'other'){
     $current_user = $user->getUser($_GET['user_id']);
     $posts = $post->getLikePost($start, 5, $current_user['id']);
 }

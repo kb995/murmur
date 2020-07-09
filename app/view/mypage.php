@@ -10,13 +10,14 @@ $post = new PostController;
 $like = new LikeController;
 $pageTitle = 'マイページ';
 
-
 // 認証
 $user->loginLimit();
 
 
 // ユーザ情報取得
 $login_user = $user->getUser($_SESSION['login_user']['id']);
+// $result = $user->checkLoginUser($login_user['id'], 14);
+// echo "<pre>"; var_dump($result); echo"</pre>";
 
 // カウントデータ取得
 $count_data = $user->countData($login_user['id']);
@@ -72,18 +73,22 @@ if(!empty($_POST) && $_POST['type'] == 'like') {
                         <div class="thumb" style="background:white; width:50px; height:50px;"></div>
                         <p class="pt-2"><a href="postList.php?page=other&user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></p>
                         <div class="row">
-                            <!-- いいね -->
-                            <?php require('../view/common/like.php'); ?>
-                            <!-- 編集 -->
-                            <a class="px-5" href="editPost.php?post_id=<?php echo $post['id']; ?>">
-                                <i class="fas fa-edit text-white"></i>
-                                <span class="text-white">編集</span>
-                            </a>
-                            <!-- 削除 -->
-                            <a class="mr-auto" href="#">
-                                <i class="fas fa-trash-alt text-white"></i>
-                                <span class="text-white">削除</span>
-                            </a>
+                            <?php if(!$user->checkUser($login_user['id'], $post['user_id'])): ?>
+                                <!-- いいね -->
+                                <?php require('../view/common/like.php'); ?>
+                            <?php else: ?>
+                                <!-- 編集 -->
+                                <a class="px-3" href="editPost.php?post_id=<?php echo $post['id']; ?>">
+                                    <i class="fas fa-edit text-white"></i>
+                                    <span class="text-white">編集</span>
+                                </a>
+                                <!-- 削除 -->
+                                <a class="mr-auto" href="#">
+                                    <i class="fas fa-trash-alt text-white"></i>
+                                    <span class="text-white">削除</span>
+                                </a>
+                            <?php endif; ?>
+
                             <span class="ml-auto pr-3"><?php echo $post['created_at']; ?></span>
                         </div>
                         <div style="border: solid 1px white;" class="my-2"></div>

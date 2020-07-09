@@ -15,7 +15,6 @@ $user->loginLimit();
 
 // ユーザーデータ取得
 $login_user = $user->getUser($_SESSION['login_user']['id']);
-// $user_detail = $user->getUser($_GET['user_id']);
 
 // カウントデータ取得
 $count_data = $user->countData($login_user['id']);

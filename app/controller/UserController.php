@@ -170,5 +170,16 @@ class UserController {
             echo 'DB接続エラー発生 : ' . $e->getMessage();
             $this->error_msgs[] = 'しばらくしてから再度試してください';
         }
-}
+    }
+
+    // ログインユーザーと指定IDユーザーがどういつかどうか
+    public function checkUser($login_user, $check_id) {
+        if($login_user == $check_id) {
+            // ログインユーザーと同一
+            return true;
+        } else {
+            // ログインユーザーと同一でない
+            return false;
+        }
+    }
 }
