@@ -121,9 +121,9 @@ class User {
                 $_SESSION['login_limit'] = $session_default_limit;
             } else {
                 $_SESSION['error_msgs'] = 'メールアドレスかパスワードが間違っています';
+                header('Location: login.php');
             }
         } catch (PDOException $e) {
-            echo 'DB接続エラー発生 : ' . $e->getMessage();
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }
     }

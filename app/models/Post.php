@@ -92,6 +92,28 @@ class Post {
             return $result;
         }
 
+    // 投稿を指定分取得(ユーザーを指定)
+    public function getUserPosts($user_id, $start, $limit) {
+            try {
+                $dbh = dbConnect();
+                $sql = 'SELECT *, posts.id
+                        FROM posts 
+                        JOIN users ON posts.user_id = users.id
+                        WHERE posts.user_id = :user_id AND users.delete_flg = 0 AND posts.delete_flg = 0 
+                        ORDER BY posts.created_at DESC LIMIT :start, :limit';
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindValue(':start', $start, PDO::PARAM_INT);
+                $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+                $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
+            }
+            return $result;
+        }
+
         // 投稿を一件取得
         public function getPostById($post_id) {
             try {
