@@ -1,5 +1,5 @@
 <?php
-
+ini_set('display_errors', 1);
 
 require_once('../controller/UserController.php');
 require_once('../controller/PostController.php');
@@ -18,7 +18,10 @@ $user->loginLimit();
 
 // ユーザーデータ取得
 $login_user = $user->getUser($_SESSION['login_user']['id']);
-$user_detail = $user->getUser($_GET['user_id']);
+
+if(!empty($_GET['user_id'])) {
+    $user_detail = $user->getUser($_GET['user_id']);
+}
 
 // ページング
 if(isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
@@ -29,15 +32,15 @@ if(isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
 $start = 5 * ($page - 1);
 
 // ページ遷移元で条件分岐
-if(!empty($_GET['page']) && $_GET['page'] === 'self') {
+// if(!empty($_GET['page']) && $_GET['page'] === 'self') {
     $posts = $post->getPostsById($start, 5, $login_user['id']);
     $count_data = $user->countData($login_user['id']);
 
-} elseif (!empty($_GET['page']) && $_GET['page'] === 'other') {
-    // カウントデータ取得
-    $count_data = $user->countData($user_detail['id']);
-    $posts = $post->getPostsById($start, 5, $user_detail['id']);
-}
+// } elseif (!empty($_GET['page']) && $_GET['page'] === 'other') {
+//     // カウントデータ取得
+//     $count_data = $user->countData($user_detail['id']);
+//     $posts = $post->getPostsById($start, 5, $user_detail['id']);
+// }
 
 
 // ログイン有効期限チェック
@@ -56,47 +59,52 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
 <main class="container my-5">
     <h2 class="text-center h3 my-5">
         <?php
-        if(!empty($_GET['page']) && $_GET['page'] === 'self') {
-            echo $login_user['name'];
-        } elseif (!empty($_GET['page']) && $_GET['page'] === 'other') {
-            echo $user_detail['name'];
-        } else {
-            echo '名無し';
-        }
+        // if(!empty($_GET['location']) && $_GET['location'] === 'self') {
+        //     echo '自分';
+        // } elseif (!empty($_GET['page']) && $_GET['page'] === 'other') {
+        //     echo $user_detail['name'] . 'さん';
+        // } else {
+        //     echo '名無し さん';
+        // }
         ?>
-        さんの投稿一覧
+        の投稿一覧
     </h2>
     <!-- プロフカード -->
     <div class="w-50 card p-5 mb-5 mx-auto">
         <h3 class="pb-3 text-center h5 text-muted">プロフィール</h3>
         <div class="m-auto" style="width:150px;height:150px;background-color:white;"></div>
 
-        <?php if(!empty($_GET['page']) && $_GET['page'] === 'self') : ?>
-            <p class="text-center my-4 h4"><a href="postList.php?page=self"><?php echo $login_user['name']; ?></a></p>
-        <?php elseif (!empty($_GET['page']) && $_GET['page'] === 'other') : ?>
-            <p class="text-center my-4 h4"><a href="postList.php?page=other"><?php echo $user_detail['name']; ?></a></p>
+        <!-- 名前 -->
+        <?php if(!$user->checkUser($login_user['id'], $user_detail['id'])) : ?>
+            <p class="text-center my-4 h4"><a href="postList.php"><?php echo $login_user['name']; ?></a></p>
+        <?php else :?>
+            <p class="text-center my-4 h4"><a href="postList.php"><?php echo $user_detail['name']; ?></a></p>
         <?php endif; ?>
+
         <!-- フォローボタン -->
         <form action="" method="post">
             <input type="hidden" name="type" value="follow">
             <div class="text-center">
-                <?php if($user->check_follow($login_user['id'], $user_detail['id'])) : ?>
-                    <button class="btn btn-secondary" name="follow" type="submit">フォロー済み</button>
-                <?php else : ?>
-                <button class="btn btn-primary" name="follow" type="submit">フォローする</button>
+                <?php if(!$user->checkUser($login_user['id'], $user_detail['id'])): ?>
+                    <?php if($user->check_follow($login_user['id'], $user_detail['id'])) : ?>
+                        <button class="btn btn-secondary" name="follow" type="submit">フォロー済み</button>
+                    <?php else : ?>
+                    <button class="btn btn-primary" name="follow" type="submit">フォローする</button>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </form>
+
         <!-- プロフィール -->
-        <?php if(!empty($_GET['page']) && $_GET['page'] === 'self') : ?>
+        <?php if(!$user->checkUser($login_user['id'], $post['user_id'])) : ?>
             <p class="my-4"><?php echo $login_user['profile']; ?></p>
-        <?php elseif (!empty($_GET['page']) && $_GET['page'] === 'other') : ?>
+        <?php else :?>
             <p class="my-4"><?php echo $user_detail['profile']; ?></p>
         <?php endif; ?>
 
         <!-- カウント表示 -->
         <div class="my-3 row">
-            <a class="col-6 block count_btn" href="myPost.php">
+            <a class="col-6 block count_btn" href="postList.php">
                 <p class="text-center text-muted">投稿数</p>
                 <p class="text-center h4"><?php echo $count_data['post']['COUNT(*)']; ?></p>
             </a>
@@ -123,9 +131,9 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
     <article class="border-w p-2">
         <h2 class="text-center h3">
             <?php
-            if(!empty($_GET['page']) && $_GET['page'] === 'self') {
+            if(!$user->checkUser($login_user['id'], $post['user_id'])) {
                 echo $login_user['name'];
-            }elseif($_GET['page'] === 'other') {
+            } else {
                 echo $user_detail['name'];
             }
             ?>
@@ -136,7 +144,7 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
                 <p class="pt-2"><a href="userDetail.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></p>
                 <div class="row">
 
-                <?php if(!empty($_GET['page']) && $_GET['page'] === 'self') : ?>
+                <?php if(!$user->checkUser($login_user['id'], $post['user_id'])) : ?>
                     <!-- 編集 -->
                     <a class="px-3" href="editPost.php?post_id=<?php echo $post['id']; ?>">
                         <i class="fas fa-edit text-white"></i>
@@ -147,7 +155,7 @@ if(!empty($_POST) && $_POST['type'] === 'follow') {
                         <i class="fas fa-trash-alt text-white"></i>
                         <span class="text-white">削除</span>
                     </a>
-                <?php elseif (!empty($_GET['page']) && $_GET['page'] === 'other') : ?>
+                <?php elseif (!$user->checkUser($login_user['id'], $post['user_id'])) : ?>
                     <!-- いいね -->
                     <?php require('../view/common/like.php'); ?>
                 <?php endif; ?>

@@ -26,11 +26,11 @@ if(isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
 $start = 5 * ($page - 1);
 
 // 取得記事を条件で変える
-if($_GET['page'] === 'mypage') {
+if($_GET['location'] === 'mypage') {
     $current_user = $user->getUser($login_user['id']);
     $posts = $post->getLikePost($start, 5, $current_user['id']);
 
-}elseif ($_GET['page'] === 'other'){
+}elseif ($_GET['location'] === 'other'){
     $current_user = $user->getUser($_GET['user_id']);
     $posts = $post->getLikePost($start, 5, $current_user['id']);
 }
@@ -43,8 +43,8 @@ if(!empty($_POST) && $_POST['type'] == 'like') {
 
 ?>
 
-<?php require('head.php'); ?>
-<?php require('header.php'); ?>
+<?php require('../view/common/head.php'); ?>
+<?php require('../view/common/header.php'); ?>
 
 <main class="container my-5">
     <h1 class="text-center mb-5">いいねした投稿</h1>
@@ -90,11 +90,14 @@ if(!empty($_POST) && $_POST['type'] == 'like') {
 
             </div>
         <?php endforeach; ?>
-    </article>
 
     <!-- ページング -->
-    <?php require_once('paging.php'); ?>
+    <div class="w-50">
+        <?php require_once('../view/common/paging.php'); ?>
+    </div>
+    </article>
+
 
 </main>
 
-<?php require_once('footer.php'); ?>
+<?php require_once('../view/common/footer.php'); ?>

@@ -5,17 +5,21 @@ class UserValidation {
     private $data;
     private $error_msgs = array();
 
+    // 値セット
     public function setData($data) {
         $this->data = $data;
     }
+    // 値取得
     public function getData() {
         return $this->data;
     }
+
+    // エラー取得
     public function getErrorMsgs() {
         return $this->error_msgs;
     }
 
-    // ユーザー登録時
+    // ユーザー登録時チェック
     public function checkSignup() {
         $email = $this->data['email'];
         $password = $this->data['password'];

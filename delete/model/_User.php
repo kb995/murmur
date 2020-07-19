@@ -10,8 +10,8 @@ class User {
     public $email;
     public $password;
     public $name;
-    public $profile;
     public $thumbnail;
+    public $profile;
 
     public $count_data = array();
     public $error_msgs = array();

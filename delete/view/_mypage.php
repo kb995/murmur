@@ -16,8 +16,6 @@ $user->loginLimit();
 
 // ユーザ情報取得
 $login_user = $user->getUser($_SESSION['login_user']['id']);
-// $result = $user->checkLoginUser($login_user['id'], 14);
-// echo "<pre>"; var_dump($result); echo"</pre>";
 
 // カウントデータ取得
 $count_data = $user->countData($login_user['id']);
@@ -71,7 +69,7 @@ if(!empty($_POST) && $_POST['type'] == 'like') {
                 <?php foreach($posts as $post): ?>
                     <div class="mx-auto card my-3 p-4">
                         <div class="thumb" style="background:white; width:50px; height:50px;"></div>
-                        <p class="pt-2"><a href="postList.php?page=other&user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></p>
+                        <p class="pt-2"><a href="postList.php?user_id=<?php echo $post['user_id']; ?>"><?php echo $post['name']; ?></a></p>
                         <div class="row">
                             <?php if(!$user->checkUser($login_user['id'], $post['user_id'])): ?>
                                 <!-- いいね -->

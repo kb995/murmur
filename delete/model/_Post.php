@@ -37,7 +37,9 @@ class Post {
     public static function getOnePost($post_id) {
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT * FROM posts WHERE id = :post_id AND delete_flg = 0';
+            $sql = 'SELECT * 
+                    FROM posts 
+                    WHERE id = :post_id AND delete_flg = 0';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':post_id', $post_id, PDO::PARAM_INT);
             $stmt->execute();
@@ -51,12 +53,17 @@ class Post {
     public static function getSomePost($start, $count) {
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT users.name, posts.id, posts.user_id, posts.text, posts.created_at FROM posts JOIN users ON posts.user_id = users.id WHERE users.delete_flg = 0 AND posts.delete_flg = 0 ORDER BY posts.created_at DESC LIMIT :start, :count';
+            $sql = 'SELECT * 
+                    FROM posts 
+                    JOIN users ON posts.user_id = users.id
+                    WHERE users.delete_flg = 0 AND posts.delete_flg = 0 
+                    ORDER BY posts.created_at DESC LIMIT :start, :count';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':start', $start, PDO::PARAM_INT);
             $stmt->bindValue(':count', $count, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
             echo '例外エラー発生 : ' . $e->getMessage();
             $err_msg['etc'] = 'しばらくしてから再度試してください';

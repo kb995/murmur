@@ -1,15 +1,16 @@
 <?php
 
-// 設定
-// ============
-// エラー表示
+// * ---------- 設定 ---------- *
+
+// エラーをブラウザに表示
 ini_set('display_errors', 1);
-// セッション
+
+// セッション使用
 session_start();
 
 
-// DBデータ取得
-// =============
+// * ---------- DB ---------- *
+
 // DB設定
 const DSN = 'mysql:host=localhost;dbname=murmur;charset=utf8';
 const USERNAME = 'root';

@@ -114,7 +114,8 @@ class UserController {
 
     // ログイン期限を確認する
     public function loginLimit() {
-        if (!empty($_SESSION['login_flg'])) {
+        // ログイン歴あり &$ サインアップからでない()
+        if (!empty($_SESSION['login_flg']) && $_POST['page'] !== 'signup') {
             if($_SESSION['login_date'] + $_SESSION['login_limit'] < time()) {
                 $error_msg['etc'] = 'ログイン有効期限切れです';
                 session_destroy();

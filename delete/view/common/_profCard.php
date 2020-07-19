@@ -8,17 +8,17 @@
     <a href="editProf.php?login_id=<?php echo $login_user['id']; ?>" type="button" class="btn btn-white mb-4">プロフィール編集</a>
 
     <div class="my-3 row">
-        <a class="col-6 block count_btn" href="postList.php?page=self">
+        <a class="col-6 block count_btn" href="postList.php?">
             <p class="text-center text-muted">投稿数</p>
             <p class="text-center h4"><?php echo $count_data['post']['COUNT(*)']; ?></p>
         </a>
-        <a href="likeList.php?location=mypage" class="col-6 block count_btn">
+        <a href="likeList.php" class="col-6 block count_btn">
             <p class="text-center text-muted">いいね</p>
             <p class="text-center h4"><?php echo $count_data['like']['COUNT(*)']; ?></p>
         </a>
     </div>
     <div class="my-3 row">
-        <a href="followList.php?location=mypage" class="col-6 block count_btn">
+        <a href="followList.php" class="col-6 block count_btn">
             <p class="text-center text-muted">フォロー</p>
             <p class="text-center h4"><?php echo $count_data['follow']['COUNT(*)']; ?></p>
         </a>
