@@ -5,7 +5,7 @@
     
     <div class="form-controll my-4">
         <textarea class="form-control" name="text" cols="5" rows="5"><?php if(!empty($_POST['text'])) echo $_POST['text']; ?></textarea>
-        <input type="hidden" name="type" value="new">
+        <input type="hidden" name="action" value="new">
     </div>
     
     <div class="text-right my-3">

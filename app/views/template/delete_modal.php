@@ -25,5 +25,6 @@
 </div>
 
 <form action="" method="post" id="delete">
-
+  <input type="hidden" name="action" value="delete">
+  <input type="hidden" name="post_id" value="<?php echo $post['id'] ?>">
 </form>

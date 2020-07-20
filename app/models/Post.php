@@ -69,6 +69,22 @@ class Post {
         }
     }
 
+    // 投稿削除
+    public function delete() {
+        try {
+            $dbh = dbConnect();
+            $sql = 'UPDATE posts 
+                    SET delete_flg = 1, updated_at = :updated_at 
+                    WHERE id = :post_id';
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_STR);
+            $result = $stmt->execute();
+        } catch (PDOException $e) {
+            $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
+        }
+    }
+
     // * ---------- データ取得 ---------- *
 
     // 投稿を指定分取得

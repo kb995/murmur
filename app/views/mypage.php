@@ -12,8 +12,13 @@ $login_user = $user->getOneUser($_SESSION['login_user']['id']);
 $current_posts = $post->getCurrentPosts(0, 3);
 
 // 投稿処理
-if(!empty($_POST) && $_POST['type'] == 'new') {
+if(!empty($_POST) && $_POST['action'] == 'new') {
     $result = $post->new();
+}
+
+// 投稿処理
+if(!empty($_POST) && $_POST['action'] == 'delete') {
+    $result = $post->delete();
 }
 
 ?>

@@ -45,6 +45,21 @@ class PostController {
             header("Location: mypage.php");
         }
     }
+
+    // 投稿削除
+    public function delete() {
+        $post_id = $_POST['post_id'];
+
+        // $post = Post::getOnePost($post_id);
+        $post = new Post;
+        $post->setId($post_id);
+        $result = $post->delete();
+        if($result === false) {
+            $_SESSION['error_msgs'] = '削除に失敗しました';
+        }
+        header('Location: mypage.php');
+
+    }
     // * ---------- データ取得 ---------- *
 
     // 最新記事取得
