@@ -110,6 +110,15 @@ class UserController {
             }
         }
 
+        // ログインユーザーの投稿かの確認
+        public function checkUserType($login_user, $check_user) {
+            if($login_user === $check_user) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     // * ---------- フォロー機能 ---------- *
 
 

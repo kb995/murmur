@@ -63,5 +63,4 @@ class PostController {
         $post = new Post;
         return $data = $post->getPostById($post_id);
     }
-
 }
