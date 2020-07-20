@@ -9,18 +9,18 @@
             </p>
             <!-- 記事操作ボタン / いいね -->
             <div class="row">
-                <!-- ログイン判定 -->
-                <!-- いいねボタン -->
+                <?php if($user->checkUserType($login_user['id'], $post['user_id'])) : ?>
                 <!-- 編集 -->
                 <a class="px-3" href="postEdit.php?post_id=<?php echo $post['id']; ?>">
                     <i class="fas fa-edit "></i>
                     <span class="">編集</span>
                 </a>
                 <!-- 削除 -->
-                <a class="mr-auto" href="#">
-                    <i class="fas fa-trash-alt "></i>
-                    <span class="">削除</span>
-                </a>
+                <?php require('delete_modal.php'); ?>
+                <?php else: ?>
+                <!-- いいねボタン -->
+                いいね
+                <?php endif; ?>
 
                 <span class="ml-auto pr-3"><?php echo $post['created_at']; ?></span>
             </div>
