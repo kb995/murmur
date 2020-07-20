@@ -19,7 +19,8 @@
                 <?php require('delete_modal.php'); ?>
                 <?php else: ?>
                 <!-- いいねボタン -->
-                いいね
+                <?php require('like.php'); ?>
+
                 <?php endif; ?>
 
                 <span class="ml-auto pr-3"><?php echo $post['created_at']; ?></span>

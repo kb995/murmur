@@ -2,9 +2,11 @@
 require_once('../config/app.php');
 require_once('../controllers/PostController.php');
 require_once('../controllers/UserController.php');
+require_once('../controllers/LikeController.php');
 
 $post = new PostController;
 $user = new UserController;
+$like = new LikeController;
 
 // ページ情報取得
 $login_user = $_SESSION['login_user'];
@@ -19,6 +21,11 @@ if(!empty($_POST) && $_POST['action'] == 'new') {
 // 投稿処理
 if(!empty($_POST) && $_POST['action'] == 'delete') {
     $result = $post->delete();
+}
+
+// いいね機能
+if(!empty($_POST) && $_POST['action'] == 'like') {
+    $like->like($login_user['id'], $_POST['post_id']);
 }
 
 ?>

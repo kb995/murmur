@@ -54,8 +54,7 @@ class User {
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $result = $stmt->execute();
         } catch (PDOException $e) {
-            echo 'DB接続エラー発生 : ' . $e->getMessage();
-            $error_msgs['etc'] = 'しばらくしてから再度試してください';
+            $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }
     }
 
