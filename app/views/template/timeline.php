@@ -1,5 +1,4 @@
 <section>
-    <h2 class="text-center h3 my-3">タイムライン</h2>
     <?php foreach($current_posts as $post): ?>
         <div class="mx-auto card my-3 p-4">
             <!-- サムネイル(仮) -->
@@ -9,6 +8,7 @@
             </p>
             <!-- 記事操作ボタン / いいね -->
             <div class="row">
+
                 <?php if($user->checkUserType($login_user['id'], $post['user_id'])) : ?>
                 <!-- 編集 -->
                 <a class="px-3" href="postEdit.php?post_id=<?php echo $post['id']; ?>">
@@ -20,7 +20,6 @@
                 <?php else: ?>
                 <!-- いいねボタン -->
                 <?php require('like.php'); ?>
-
                 <?php endif; ?>
 
                 <span class="ml-auto pr-3"><?php echo $post['created_at']; ?></span>

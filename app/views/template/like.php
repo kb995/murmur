@@ -9,7 +9,7 @@
     </button>
     <span>
         <?php
-        $count = $like->getLikeCount($post['id']);
+        $count = $like->getLikeCountByPost($post['id']);
         echo $count[0];
         ?>
     </span>
