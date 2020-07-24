@@ -49,8 +49,6 @@ class PostController {
     // 投稿削除
     public function delete() {
         $post_id = $_POST['post_id'];
-
-        // $post = Post::getOnePost($post_id);
         $post = new Post;
         $post->setId($post_id);
         $result = $post->delete();
@@ -77,5 +75,34 @@ class PostController {
     public function getCurrentPost($post_id) {
         $post = new Post;
         return $data = $post->getPostById($post_id);
+    }
+
+    // 投稿件数を取得
+    public function postCount($user_id) {
+        $post = new Post;
+        return $count =  $post->getPostCount($user_id);
+    }
+
+    // ライクしている記事を取得
+    public function getLikePost($user_id, $start, $count) {
+        try {
+            $dbh = dbConnect();
+            $sql = 'SELECT users.name, posts.id, posts.user_id, posts.text,
+            posts.created_at
+            FROM posts
+            INNER JOIN likes ON posts.id = likes.post_id
+            INNER JOIN users ON users.id = posts.user_id
+            WHERE likes.user_id = :user_id AND posts.delete_flg = 0
+            LIMIT :start, :count';
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':start', $start, PDO::PARAM_INT);
+            $stmt->bindValue(':count', $count, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
+        }
+        return $result;
     }
 }

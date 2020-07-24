@@ -147,5 +147,19 @@ class Post {
             }
             return $result;
         }
+
+            // 投稿数取得
+        public function getPostCount($user_id) {
+            $dbh = dbConnect();
+            $sql = 'SELECT COUNT(*)
+                    FROM posts
+                    WHERE delete_flg = 0 AND user_id = :user_id';
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $count = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $count;
+    }
+
     }
 

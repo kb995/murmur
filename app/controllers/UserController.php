@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('../config/app.php');
 require_once('../models/User.php');
 require_once('../validation/UserValidation.php');
@@ -26,7 +26,9 @@ class UserController {
         $user->setEmail($data['email']);
         $user->setName($data['name']);
         $user->setPassword($data['password']);
-        $user->save();
+        $result = $user->save();
+
+        $this->login();
 
         header("Location: mypage.php");
         }
@@ -118,8 +120,4 @@ class UserController {
                 return false;
             }
         }
-
-    // * ---------- フォロー機能 ---------- *
-
-
 }

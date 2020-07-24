@@ -26,14 +26,26 @@ class LikeController {
         }
     }
 
-    // いいね数取得
-    public function getLikeCount($post_id) {
+    // 記事のいいね数取得
+    public function getLikeCountByPost($post_id) {
         $dbh = dbConnect();
         $sql = "SELECT COUNT(user_id) 
                 FROM likes 
                 WHERE post_id = :post_id";
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':post_id', $post_id, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    // ユーザーのいいね数取得
+    public function getLikeCountByUser($user_id) {
+        $dbh = dbConnect();
+        $sql = "SELECT COUNT(*) 
+                FROM likes 
+                WHERE user_id = :user_id";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
     }

@@ -1,32 +1,36 @@
-<?php 
+<?php
 require_once('../config/app.php');
 require_once('../controllers/PostController.php');
 require_once('../controllers/UserController.php');
 require_once('../controllers/LikeController.php');
+require_once('../controllers/FollowController.php');
 
 $post = new PostController;
 $user = new UserController;
 $like = new LikeController;
+$follow = new FollowController;
 
 // ページ情報取得
-$login_user = $_SESSION['login_user'];
+// $login_user = $_SESSION['login_user'];
 $login_user = $user->getOneUser($_SESSION['login_user']['id']);
-$current_posts = $post->getCurrentPosts(0, 3);
+$current_posts = $post->getCurrentPosts(0, 5);
 
 // 投稿処理
-if(!empty($_POST) && $_POST['action'] == 'new') {
+if(!empty($_POST) && $_POST['action'] === 'new') {
     $result = $post->new();
 }
 
 // 投稿処理
-if(!empty($_POST) && $_POST['action'] == 'delete') {
-    $result = $post->delete();
+if(!empty($_POST) && $_POST['action'] === 'delete') {
+    $post->delete();
 }
 
 // いいね機能
-if(!empty($_POST) && $_POST['action'] == 'like') {
+if(!empty($_POST) && $_POST['action'] === 'like') {
     $like->like($login_user['id'], $_POST['post_id']);
 }
+
+
 
 ?>
 
@@ -50,7 +54,6 @@ require_once('./template/header.php');
     </div>
 </main>
 
-<?php 
+<?php
 require_once('./template/footer.php')
 ?>
-

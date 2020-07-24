@@ -44,7 +44,7 @@ class User {
     public function save() {
         try {
             $dbh = dbConnect();
-            $sql = 'INSERT INTO users (email, password, name, created_at, updated_at) 
+            $sql = 'INSERT INTO users (email, password, name, created_at, updated_at)
                     VALUE (:email, :password, :name, :created_at, :updated_at)';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
@@ -52,7 +52,8 @@ class User {
             $stmt->bindValue(':password', password_hash($this->password, PASSWORD_DEFAULT), PDO::PARAM_STR);
             $stmt->bindValue(':created_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-            $result = $stmt->execute();
+            $stmt->execute();
+
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }
@@ -62,8 +63,8 @@ class User {
     public function update($user_id) {
         try {
             $dbh = dbConnect();
-            $sql = 'UPDATE users 
-                    SET email = :email, name = :name, profile = :profile, updated_at = :updated_at 
+            $sql = 'UPDATE users
+                    SET email = :email, name = :name, profile = :profile, updated_at = :updated_at
                     WHERE id = :user_id';
 
             $stmt = $dbh->prepare($sql);
@@ -85,8 +86,8 @@ class User {
     public function getUserById($user_id) {
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT * 
-                    FROM users 
+            $sql = 'SELECT *
+                    FROM users
                     WHERE id = :user_id AND delete_flg = 0';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
@@ -103,9 +104,9 @@ class User {
     public function authUser($email, $password) {
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT * 
-                    FROM users 
-                    WHERE email = :email 
+            $sql = 'SELECT *
+                    FROM users
+                    WHERE email = :email
                     AND delete_flg = 0';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':email', $email, PDO::PARAM_STR);
