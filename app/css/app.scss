@@ -6,13 +6,17 @@
 a:hover {
     text-decoration: none;
 }
-  body {
-    outline: none;
-    font-family: "dot";
-    background-color: #121212;
-    overflow-y: scroll;
-    color: #fff;
-    }
+button:focus {
+    outline:0;
+}
+
+body {
+outline: none;
+font-family: "dot";
+background-color: #121212;
+overflow-y: scroll;
+color: #fff;
+}
 
 header {
     background-color: #ebebeb;

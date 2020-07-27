@@ -50,10 +50,10 @@ require_once('./template/header.php');
         </div>
         <div class="col-8">
             <?php require('./template/timeline.php'); ?>
+            <?php require('./template/paging.php'); ?>
         </div>
     </div>
 </main>
-
 <?php
 require_once('./template/footer.php')
 ?>

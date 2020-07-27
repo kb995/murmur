@@ -7,6 +7,10 @@ a:hover {
   text-decoration: none;
 }
 
+button:focus {
+  outline: 0;
+}
+
 body {
   outline: none;
   font-family: "dot";
