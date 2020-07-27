@@ -1,0 +1,117 @@
+@font-face {
+    font-family: 'dot';
+    src: url("../../font/PixelMplus10-Regular.ttf");
+  }
+
+a:hover {
+    text-decoration: none;
+}
+  body {
+    outline: none;
+    font-family: "dot";
+    background-color: #121212;
+    overflow-y: scroll;
+    color: #fff;
+    }
+
+header {
+    background-color: #ebebeb;
+
+    .nav-link {
+        color: #000;
+        &:hover {
+            border-bottom: 2px solid blue;
+        }
+    }
+
+    .logo .navbar-brand {
+        text-decoration: none;
+        color: #121212;
+    }
+
+
+}
+
+.card {
+    background-color: #121212;
+    border: solid 3px #fff;
+}
+
+.count_btn {
+    &:hover {
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        transition: .2s;
+        border-radius: 6px;
+    }
+}
+.btn_active {
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 6px;
+}
+
+.btn-l {
+    color: #fff;
+    border: solid 3px #fff;
+    &:hover {
+        color: #d1d1d1;
+        border-color: #d1d1d1;
+    }
+}
+
+.timeline {
+    .user_name {
+        font-size: 1.5rem;
+    }
+    .post_text{
+        font-size: 1.5rem;
+        letter-spacing: .1rem;
+    }
+}
+
+.input_text {
+    font-size: 1.6rem;
+}
+
+.like_btn {
+    background-color: #111;
+    border: none;
+    font-size: 1.2rem;
+    padding: 0;
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.like_num {
+    font-size: 1.2rem;
+    padding-right: 1rem;
+}
+.delete_btn {
+    border: none;
+    &:hover {
+        color: #fff;
+        background-color: red;
+        border: none;
+    }
+}
+.edit_btn {
+    border: none;
+    &:hover {
+        color: #fff;
+        background-color: green;
+        border: none;
+    }
+}
+
+.post_btn {
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 3px;
+    &:hover {
+        opacity: .8;
+    }
+}

@@ -1,5 +1,5 @@
 
-<button type="button" class="btn-danger" data-toggle="modal" data-target="#Modal">
+<button type="button" class="mr-4 delete_btn" data-toggle="modal" data-target="#Modal">
     <i class="fas fa-trash-alt "></i>
     <span>削除</span>
 </button>

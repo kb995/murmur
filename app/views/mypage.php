@@ -20,7 +20,7 @@ if(!empty($_POST) && $_POST['action'] === 'new') {
     $result = $post->new();
 }
 
-// 投稿処理
+// 投稿削除処理
 if(!empty($_POST) && $_POST['action'] === 'delete') {
     $post->delete();
 }

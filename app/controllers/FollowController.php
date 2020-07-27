@@ -6,11 +6,11 @@ class FollowController {
 
     // フォロー機能
     public function follow($login_id, $user_id) {
-        if($this->check_follow($login_id, $user_id)) {
-            $sql ='DELETE FROM follow 
+        if($this->checkDuplicateFollow($login_id, $user_id)) {
+            $sql ='DELETE FROM follow
                    WHERE :follow_id = follow_id AND :followed_id = followed_id';
         }else{
-            $sql ='INSERT INTO follow(follow_id,followed_id) 
+            $sql ='INSERT INTO follow(follow_id,followed_id)
                    VALUES(:follow_id,:followed_id)';
         }
         try {
@@ -25,19 +25,24 @@ class FollowController {
     }
 
     // フォローチェック
-    public function check_follow($follow_user, $followed_user) {
+    public function checkDuplicateFollow($follow_user, $followed_user) {
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT follow_id,followed_id
-                    FROM follow 
+            $sql = 'SELECT *
+                    FROM follow
                     WHERE follow_id = :follow_id AND followed_id = :followed_id';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':follow_id', $follow_user, PDO::PARAM_INT);
             $stmt->bindValue(':followed_id', $followed_user, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result;
-            
+            if($result) {
+                return true;
+            } else {
+                return false;
+            }
+
+
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }
@@ -46,8 +51,8 @@ class FollowController {
     // フォロー数取得
     public function followCount($user_id) {
         $dbh = dbConnect();
-        $sql = "SELECT COUNT(*) 
-                FROM follow 
+        $sql = "SELECT COUNT(*)
+                FROM follow
                 WHERE follow_id = :user_id";
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -58,12 +63,40 @@ class FollowController {
     // フォロワー数取得
     public function followedCount($user_id) {
         $dbh = dbConnect();
-        $sql = "SELECT COUNT(*) 
-                FROM follow 
+        $sql = "SELECT COUNT(*)
+                FROM follow
                 WHERE followed_id = :user_id";
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
+    }
+
+    // フォローユーザー取得
+    public function getFollowUser($user_id) {
+        $dbh = dbConnect();
+        $sql = 'SELECT DISTINCT *
+                FROM users
+                JOIN follow ON follow.follow_id = users.id
+                WHERE follow.follow_id = :user_id
+                ';
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // 被フォローユーザー取得
+    public function getFollowedUser($user_id) {
+        $dbh = dbConnect();
+        $sql = 'SELECT follow.follow_id
+                FROM users
+                JOIN follow ON follow.followed_id = users.id
+                WHERE follow.followed_id = :user_id
+                ';
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
