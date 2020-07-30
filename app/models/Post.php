@@ -37,7 +37,7 @@ class Post {
     public function save() {
         try {
             $dbh = dbConnect();
-            $sql = 'INSERT INTO posts ( text, user_id, created_at, updated_at ) 
+            $sql = 'INSERT INTO posts ( text, user_id, created_at, updated_at )
                     VALUE (:text, :user_id,:created_at, :updated_at)';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':text', $this->text, PDO::PARAM_STR);
@@ -55,8 +55,8 @@ class Post {
     public function update($post_id) {
         try {
             $dbh = dbConnect();
-            $sql = 'UPDATE posts 
-                    SET text = :text, updated_at = :updated_at 
+            $sql = 'UPDATE posts
+                    SET text = :text, updated_at = :updated_at
                     WHERE id = :post_id';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':text', $this->text, PDO::PARAM_STR);
@@ -73,8 +73,8 @@ class Post {
     public function delete() {
         try {
             $dbh = dbConnect();
-            $sql = 'UPDATE posts 
-                    SET delete_flg = 1, updated_at = :updated_at 
+            $sql = 'UPDATE posts
+                    SET delete_flg = 1, updated_at = :updated_at
                     WHERE id = :post_id';
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
@@ -88,17 +88,17 @@ class Post {
     // * ---------- データ取得 ---------- *
 
     // 投稿を指定分取得
-    public function getAllPosts($start, $limit) {
+    public function getPosts($start, $count) {
             try {
                 $dbh = dbConnect();
                 $sql = 'SELECT *, posts.id
-                        FROM posts 
+                        FROM posts
                         JOIN users ON posts.user_id = users.id
-                        WHERE users.delete_flg = 0 AND posts.delete_flg = 0 
-                        ORDER BY posts.created_at DESC LIMIT :start, :limit';
+                        WHERE users.delete_flg = 0 AND posts.delete_flg = 0
+                        ORDER BY posts.created_at DESC LIMIT :start, :count';
                 $stmt = $dbh->prepare($sql);
                 $stmt->bindValue(':start', $start, PDO::PARAM_INT);
-                $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+                $stmt->bindValue(':count', $count, PDO::PARAM_INT);
                 $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -113,9 +113,9 @@ class Post {
             try {
                 $dbh = dbConnect();
                 $sql = 'SELECT *, posts.id
-                        FROM posts 
+                        FROM posts
                         JOIN users ON posts.user_id = users.id
-                        WHERE posts.user_id = :user_id AND users.delete_flg = 0 AND posts.delete_flg = 0 
+                        WHERE posts.user_id = :user_id AND users.delete_flg = 0 AND posts.delete_flg = 0
                         ORDER BY posts.created_at DESC LIMIT :start, :limit';
                 $stmt = $dbh->prepare($sql);
                 $stmt->bindValue(':start', $start, PDO::PARAM_INT);
@@ -134,8 +134,8 @@ class Post {
         public function getPostById($post_id) {
             try {
                  $dbh = dbConnect();
-                $sql = 'SELECT * 
-                        FROM posts 
+                $sql = 'SELECT *
+                        FROM posts
                         WHERE id = :post_id';
                  $stmt = $dbh->prepare($sql);
                  $stmt->bindValue(':post_id', $post_id, PDO::PARAM_STR);
@@ -162,4 +162,3 @@ class Post {
     }
 
     }
-

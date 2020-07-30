@@ -63,7 +63,7 @@ class PostController {
     // 最新記事取得
     public function getCurrentPosts($start, $limit) {
         $post = new Post;
-        return $data = $post->getAllPosts($start, $limit);
+        return $data = $post->getPosts($start, $limit);
     }
     // 最新記事取得(ユーザー指定)
     public function getUserPosts($user_id, $start, $limit) {
