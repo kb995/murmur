@@ -21,3 +21,8 @@ function dbConnect() {
     $dbh = new PDO(DSN, USERNAME, PASSWORD);
     return $dbh;
 }
+
+// サニタイズ
+function h($s) {
+    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+  }

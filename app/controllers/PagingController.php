@@ -7,6 +7,7 @@ class PagingController {
     public $total_posts; // 投稿総数
     public $offset; // 表示開始位置
     public $total_pages; // ページ総数
+    public $pre_path;
 
     function __construct() {
         // 投稿総数セット
@@ -26,6 +27,21 @@ class PagingController {
         // ページ総数セット
         $this->total_pages = ceil($this->total_posts / $this->per_page_post); // ページ総数
 
+        // ページ種類判別
+        // $aaa = basename($_SERVER['PHP_SELF']);
+        // echo "<pre>"; var_dump($aaa); echo"</pre>";
+
+        switch(basename($_SERVER['PHP_SELF'])) {
+            case 'mypage.php':
+                $this->pre_path = 'mypage.php';
+            break;
+            // case '.php':
+            //     $this->pre_path = '.php';
+            // break;
+            // case 'mypage.php':
+            //     $this->pre_path = '.php';
+            // break;
+        }
     }
 
 }
