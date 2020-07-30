@@ -11,7 +11,7 @@ if($_POST) {
 
 ?>
 
-<?php 
+<?php
 require_once('./template/head.php');
 require_once('./template/header.php');
 $pageTitle = 'サインアップ';
@@ -26,15 +26,15 @@ $pageTitle = 'サインアップ';
 
         <div class="form-controll my-4">
             <label class="control-label" for="">ユーザー名</label>
-            <input class="form-control" type="text" name="name" value="<?php if(!empty($_POST['name'])) echo $_POST['name']; ?>">
+            <input class="form-control" type="text" name="name" value="<?php if(!empty($_POST['name'])) echo h($_POST['name']); ?>">
         </div>
         <div class="form-controll my-4">
             <label class="control-label" for="">メールアドレス<span class="badge badge-danger ml-2">必須</span></label>
-            <input class="form-control" type="email" required name="email" value="<?php if(!empty($_POST['email'])) echo $_POST['email']; ?>">
+            <input class="form-control" type="email" required name="email" value="<?php if(!empty($_POST['email'])) echo h($_POST['email']); ?>">
         </div>
         <div class="form-controll my-4">
             <label class="control-label" for="">パスワード<span class="badge badge-danger ml-2">必須</span></label>
-            <input class="form-control" type="password" required name="password" value="<?php if(!empty($_POST['password'])) echo $_POST['password']; ?>">
+            <input class="form-control" type="password" required name="password" value="<?php if(!empty($_POST['password'])) echo h($_POST['password']); ?>">
         </div>
         <input type="hidden" name="page" value="signup">
         <!-- <div class="form-controll">

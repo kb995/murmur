@@ -34,13 +34,13 @@ require_once('./template/header.php');
 ?>
 
 <main class="container mb-5">
-    <h1 class="text-center my-5"><?php echo $current_user['name']; ?> の投稿一覧</h1>
+    <h1 class="text-center my-5"><?php echo h($current_user['name']); ?> の投稿一覧</h1>
     <div class="w-50 mx-auto">
         <article class="card p-5 mb-5 mx-auto">
             <h3 class="pb-3 text-center h5 text-muted">プロフィール</h3>
             <!-- プロフィール -->
             <div class="m-auto" style="width:150px;height:150px;background-color:gray;"></div>
-            <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo $current_user['name']; ?></a></p>
+            <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo h($current_user['name']); ?></a></p>
             <p><?php echo $current_user['profile']; ?></p>
 
             <!-- フォロー -->
@@ -59,7 +59,7 @@ require_once('./template/header.php');
 
             <!-- カウント表示 -->
             <div class="my-3 row">
-                <a class="col-6 block count_btn" href="userDetail.php?user_id=<?php echo $current_user['id']; ?>">
+                <a class="col-6 block count_btn" href="userDetail.php?user_id=<?php echo h($current_user['id']); ?>">
                     <p class="text-center text-muted">投稿数</p>
                     <?php $post_count = $post->postCount($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $post_count['COUNT(*)']; ?></p>

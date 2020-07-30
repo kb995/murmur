@@ -39,8 +39,8 @@ require_once('./template/header.php');
             <h3 class="pb-3 text-center h5 text-muted">プロフィール</h3>
             <!-- プロフィール -->
             <div class="m-auto" style="width:150px;height:150px;background-color:gray;"></div>
-            <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo $current_user['name']; ?></a></p>
-            <p><?php echo $current_user['profile']; ?></p>
+            <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo h($current_user['name']); ?></a></p>
+            <p><?php echo h($current_user['profile']); ?></p>
 
             <!-- フォロー -->
             <?php if(!$user->checkUserType($login_user['id'], $current_user['id'])) : // ログインユーザーと現在のユーザが違えば表示(自分に表示させない) ?>
@@ -94,7 +94,7 @@ require_once('./template/header.php');
                         <!-- サムネイル(仮) -->
                         <div class="thumb" style="background: gray; width:80px; height:80px;"></div>
                         <p class="pt-2">
-                            <a href="userDetail.php?user_id=<?php echo $user_info['user_id']; ?>"><?php echo $user_info['name']; ?></a>
+                            <a href="userDetail.php?user_id=<?php echo $user_info['user_id']; ?>"><?php echo h($user_info['name']); ?></a>
                         </p>
                     </div>
 
@@ -113,7 +113,7 @@ require_once('./template/header.php');
                             </div>
                         </form>
 
-                    <p class="pt-2 px-2"><?php echo $user_info['profile']; ?></p>
+                    <p class="pt-2 px-2"><?php echo h($user_info['profile']); ?></p>
                 </div>
             </article>
         <?php endforeach; ?>

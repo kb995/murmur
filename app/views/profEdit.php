@@ -32,15 +32,15 @@ require_once('./template/header.php');
             </div>
             <div class="form-controll my-4">
                 <label class="control-label" for="">名前</label>
-                <input class="form-control" type="text" name="name" value="<?php echo $login_user['name']; ?>">
+                <input class="form-control" type="text" name="name" value="<?php echo h($login_user['name']); ?>">
             </div>
             <div class="form-controll my-4">
                 <label class="control-label" for="">メールアドレス</label>
-                <input class="form-control" type="email" name="email" value="<?php echo $login_user['email']; ?>">
+                <input class="form-control" type="email" name="email" value="<?php echo h($login_user['email']); ?>">
             </div>
             <div class="form-controll my-4">
                 <label class="control-label" for="">プロフィール文</label>
-                <textarea class="form-control" name="profile" cols="5" rows="5"><?php echo $login_user['profile']; ?></textarea>
+                <textarea class="form-control" name="profile" cols="5" rows="5"><?php echo h($login_user['profile']); ?></textarea>
             </div>
             <div class="text-right my-3">
                 <button type="submit" class="post_btn">編集</button>

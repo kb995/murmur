@@ -33,14 +33,14 @@ require_once('./template/header.php');
 ?>
 
 <main class="container mb-5">
-    <h1 class="text-center my-5"><?php echo $current_user['name']; ?> のいいね一覧</h1>
+    <h1 class="text-center my-5"><?php echo h($current_user['name']); ?> さんのいいね一覧</h1>
     <div class="w-50 mx-auto">
         <article class="card p-5 mb-5 mx-auto">
             <h3 class="pb-3 text-center h5 text-muted">プロフィール</h3>
             <!-- プロフィール -->
             <div class="m-auto" style="width:150px;height:150px;background-color:gray;"></div>
-            <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo $current_user['name']; ?></a></p>
-            <p><?php echo $current_user['profile']; ?></p>
+            <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo h($current_user['name']); ?></a></p>
+            <p><?php echo h($current_user['profile']); ?></p>
 
             <!-- フォロー -->
             <?php if(!$user->checkUserType($login_user['id'], $current_user['id'])) : ?>

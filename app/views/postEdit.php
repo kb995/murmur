@@ -29,7 +29,7 @@ require_once('./template/header.php');
             <!-- エラー表示 -->
             <?php require('./template/error_msgs.php'); ?>
 
-            <textarea class="form-control" name="text" cols="30" rows="10"><?php echo $current_post['text']; ?></textarea>
+            <textarea class="form-control" name="text" cols="30" rows="10"><?php echo h($current_post['text']); ?></textarea>
 
             <div class="text-right my-3">
                 <button type="submit" class="post_btn">編集</button>
