@@ -116,10 +116,27 @@ header .logo .navbar-brand {
   font-size: 1.1rem;
   padding: 10px 20px;
   border-radius: 3px;
+  display: inline;
+  float: right;
 }
 
 .post_btn:hover {
   opacity: .8;
+}
+
+.post_count {
+  color: #fff;
+  font-size: 1.3rem;
+  float: left;
+  display: inline;
+}
+
+.count_warning {
+  color: yellow;
+}
+
+.count_danger {
+  color: red;
 }
 
 #menu {

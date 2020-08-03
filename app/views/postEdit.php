@@ -29,11 +29,17 @@ require_once('./template/header.php');
             <!-- エラー表示 -->
             <?php require('./template/error_msgs.php'); ?>
 
-            <textarea class="form-control" name="text" cols="30" rows="10"><?php echo h($current_post['text']); ?></textarea>
+            <textarea id="comment" class="form-control" name="text" cols="30" rows="10"><?php echo h($current_post['text']); ?></textarea>
 
             <div class="text-right my-3">
                 <button type="submit" class="post_btn">編集</button>
             </div>
+            <span class="post_count">残り文字数 <span id="label">0</span>/300</span>
+
         </div>
     </form>
 </main>
+
+<?php
+require_once('./template/footer.php')
+?>

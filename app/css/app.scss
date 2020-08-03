@@ -116,10 +116,26 @@ header {
     font-size: 1.1rem;
     padding: 10px 20px;
     border-radius: 3px;
+    // box-shadow: 0 4px 0 gray;
+    display: inline;
+    float: right;
     &:hover {
         opacity: .8;
     }
 }
+.post_count {
+    color: #fff;
+    font-size: 1.3rem;
+    float: left;
+    display: inline;
+}
+.count_warning {
+    color: yellow;
+}
+.count_danger {
+    color: red;
+}
+
 
 #menu {
     position: absolute;

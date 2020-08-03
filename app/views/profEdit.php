@@ -40,10 +40,15 @@ require_once('./template/header.php');
             </div>
             <div class="form-controll my-4">
                 <label class="control-label" for="">プロフィール文</label>
-                <textarea class="form-control" name="profile" cols="5" rows="5"><?php echo h($login_user['profile']); ?></textarea>
+                <textarea id="comment" class="form-control" name="profile" cols="5" rows="5"><?php echo h($login_user['profile']); ?></textarea>
             </div>
+            <span class="post_count">残り文字数 <span id="label">0</span>/300</span>
             <div class="text-right my-3">
                 <button type="submit" class="post_btn">編集</button>
             </div>
         </div>
-    </form></main>
+    </form>
+</main>
+<?php
+require_once('./template/footer.php')
+?>
