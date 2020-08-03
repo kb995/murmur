@@ -1,3 +1,4 @@
+
 <header class="header">
     <nav class="navbar navbar-expand-lg container">
         <h1 class="logo">
@@ -15,11 +16,24 @@
             <?php else: ?>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="mypage.php">マイページ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">メニュー</a></li>
+                    <!-- openボタン -->
+                    <li class="nav-item"><a class="nav-link" href="#" id="show">メニュー</a></li>
                     <li class="nav-item"><a class="nav-link" href="logout.php">ログアウト</a></li>
-                    <!-- メニュー ログアウト / プロフィール編集 / 退会 -->
                 </ul>
-            <?php endif; ?>
-        </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- スライドメニュー -->
+            <ul id="menu">
+                <!-- ✗ ボタン -->
+                <i class="fas fa-times text-secondary h2" id="hide"></i>
+                <li><a href="">マイページ</a></li>
+                <li><a href="">プロフィール編集</a></li>
+                <li><a href="">ログアウト</a></li>
+                <li><a href="">退会</a></li>
+            </ul>
+
     </nav>
 </header>
+<!-- グレーカバー -->
+<div id="cover"></div>

@@ -12,8 +12,8 @@ $like = new LikeController;
 $follow = new FollowController;
 $paging = new PagingController;
 
-$aaa = $paging->pre_path;
-echo "<pre style='color: #fff;'>"; var_dump($aaa); echo"</pre>";
+// $aaa = $paging->pre_path;
+// echo "<pre style='color: #fff;'>"; var_dump($aaa); echo"</pre>";
 
 
 // ページ情報取得

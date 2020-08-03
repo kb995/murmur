@@ -14,7 +14,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <?php echo $post['text']; ?>
+        <?php echo h($post['text']); ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
