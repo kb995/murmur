@@ -25,17 +25,18 @@ $current_posts = $post->getCurrentPosts($paging->offset, $paging->per_page_post)
 if(!empty($_POST) && $_POST['action'] === 'new') {
     $result = $post->new();
 }
-
 // 投稿削除処理
 if(!empty($_POST) && $_POST['action'] === 'delete') {
     $post->delete();
 }
-
 // いいね機能
 if(!empty($_POST) && $_POST['action'] === 'like') {
     $like->like($login_user['id'], $_POST['post_id']);
 }
-
+// 退会処理
+if(!empty($_GET) && $_GET['action'] === 'withdraw') {
+    $user->withdraw($login_user['id']);
+}
 ?>
 
 <?php

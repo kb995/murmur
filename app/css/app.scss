@@ -200,3 +200,22 @@ body.menu-open #menu {
 // .menu-open #menu {
 //     right: -160px;
 // }
+
+#withdraw_modal {
+    font-size: 1.6rem;
+    background-color: #fff;
+    color: #333;
+    width: 40%;
+    padding: 50px;
+    border-radius: 4px;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 2;
+    transition: all .4s;
+}
+#withdraw_modal.hidden {
+    transform: translateY(-500px);
+}

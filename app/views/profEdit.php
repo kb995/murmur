@@ -11,6 +11,10 @@ $login_user = $user->getOneUser($_SESSION['login_user']['id']);
 if($_POST) {
     $user->edit($login_user['id']);
 }
+// 退会処理
+if(!empty($_GET) && $_GET['action'] === 'withdraw') {
+    $user->withdraw($login_user['id']);
+}
 ?>
 
 <?php

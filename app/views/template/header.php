@@ -27,13 +27,18 @@
             <ul id="menu">
                 <!-- ✗ ボタン -->
                 <i class="fas fa-times text-secondary h2" id="hide"></i>
-                <li><a href="">マイページ</a></li>
+                <li><a href="mypage.php">マイページ</a></li>
                 <li><a href="">プロフィール編集</a></li>
-                <li><a href="">ログアウト</a></li>
-                <li><a href="">退会</a></li>
+                <li><a href="logout.php">ログアウト</a></li>
+                <li><a href="#" id="withdraw_btn">退会</a></li>
             </ul>
+            <section class="card hidden" id="withdraw_modal">
+                <p class="text-center text-danger">本当に退会しますか？</p>
+                <p class="mb-2"><a href="mypage.php?action=withdraw">退会する</a></p>
+                <button id="close">閉じる</button>
+            </section>
 
     </nav>
 </header>
 <!-- グレーカバー -->
-<div id="cover"></div>
+<div class="hidden" id="cover"></div>

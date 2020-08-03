@@ -19,6 +19,10 @@ $follow_users = $follow->getFollowUser($current_user['id']);
 if(!empty($_POST) && $_POST['action'] === 'follow') {
     $follow->follow($login_user['id'], $_POST['follow_user']);
 }
+// 退会処理
+if(!empty($_GET) && $_GET['action'] === 'withdraw') {
+    $user->withdraw($login_user['id']);
+}
 ?>
 
 <?php

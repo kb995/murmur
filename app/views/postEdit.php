@@ -14,6 +14,10 @@ $current_post = $post->getCurrentPost($post_id);
 if($_POST) {
     $post->edit($current_post['id']);
 }
+// 退会処理
+if(!empty($_GET) && $_GET['action'] === 'withdraw') {
+    $user->withdraw($login_user['id']);
+}
 ?>
 
 <?php

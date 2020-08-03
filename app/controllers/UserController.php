@@ -62,6 +62,33 @@ class UserController {
         }
     }
 
+    // 退会処理
+    public function withdraw($user_id) {
+
+        $user = new User;
+        try {
+            $dbh =  dbConnect();
+            $sql = 'UPDATE users
+                    SET delete_flg = 1
+                    WHERE id = :user_id';
+            $data = array(':user_id' => $user_id);
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute($data);
+            if($stmt) {
+                $_SESSION = array();
+                session_destroy();
+                header('Location: login.php');
+            }
+
+        } catch(Exception $e) {
+            echo '例外エラー発生 : ' . $e->getMessage();
+            $err_msg['etc'] = 'しばらくしてから再度試してください';
+        }
+
+        // header("Location: login.php");
+    }
+
+
 
     // * ---------- データ取得 ---------- *
 

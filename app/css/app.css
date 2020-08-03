@@ -196,4 +196,26 @@ body.menu-open #cover {
 body.menu-open #menu {
   right: -15%;
 }
+
+#withdraw_modal {
+  font-size: 1.6rem;
+  background-color: #fff;
+  color: #333;
+  width: 40%;
+  padding: 50px;
+  border-radius: 4px;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 2;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+}
+
+#withdraw_modal.hidden {
+  -webkit-transform: translateY(-500px);
+          transform: translateY(-500px);
+}
 /*# sourceMappingURL=app.css.map */

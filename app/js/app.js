@@ -39,3 +39,26 @@
         }
     });
   })();
+
+// 退会モーダル
+(function() {
+    'use strict';
+    const open = document.getElementById('withdraw_btn');
+    const close = document.getElementById('close');
+    const modal = document.getElementById('withdraw_modal');
+    const cover = document.getElementById('cover');
+
+    open.addEventListener('click', function() {
+        modal.classList.remove('hidden');
+        cover.style.display = 'block';
+    });
+
+    close.addEventListener('click', function() {
+        modal.classList.add('hidden');
+        cover.style.display = 'none';
+
+    });
+    cover.addEventListener('click', function() {
+        close.click();
+    });
+  })();
