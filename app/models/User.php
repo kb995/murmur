@@ -120,11 +120,11 @@ class User {
                 $_SESSION['login_date'] = time();
                 $_SESSION['login_limit'] = $session_default_limit;
             } else {
-                $_SESSION['error_msgs'] = 'メールアドレスかパスワードが間違っています';
-                header('Location: login.php');
+                $_SESSION['error_msgs'][] = 'メールアドレスかパスワードが間違っています';
             }
+
         } catch (PDOException $e) {
-            $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
+            $_SESSION['error_msgs'][] = 'しばらくしてから再度試してください';
         }
     }
 

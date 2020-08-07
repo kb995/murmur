@@ -22,7 +22,14 @@ function dbConnect() {
     return $dbh;
 }
 
+// * ---------- その他関数 ---------- *
+
 // サニタイズ
-function h($s) {
-    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+function h($str) {
+    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
   }
+
+// フラッシュメッセージの設定
+function flash($message) {
+    $_SESSION['flash_message'] = $message;
+}

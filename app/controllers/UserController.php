@@ -101,30 +101,38 @@ class UserController {
 
     // ログイン処理
     public function login() {
+    //    // バリデーション
         $validation = new UserValidation;
         $data = [
             "email" => $_POST['email'],
             "password" => $_POST['password'],
         ];
         $validation->setData($data);
+        // $aaa = $validation->checkLogin();
+        // echo "<pre>"; var_dump($aaa); echo"</pre>";
 
-        if($validation->checkSignup() === false) {
+        // exit;
+
+        if($validation->checkLogin() === false) {
+            // バリデーションチェックがクリアならユーザー認証
             $_SESSION['error_msgs'] = $validation->getErrorMsgs();
         } else {
             $user = new User;
             $user->setEmail($data['email']);
             $user->setPassword($data['password']);
             $user->authUser($data['email'], $data['password']);
-
-            header("Location: mypage.php");
+            if(isset($_SESSION['login_flg']) && $_SESSION['login_flg'] === true) {
+                header("Location: mypage.php");
+            }
         }
+
     }
 
         // ログイン有効期限期限チェック
         public function loginLimit() {
             if (!empty($_SESSION['login_flg'])) { // TODO:新規登録後はスキップ
                 if($_SESSION['login_date'] + $_SESSION['login_limit'] < time()) {
-                    $_SESSION['error_msgs'] = 'ログイン有効期限切れです';
+                    $_SESSION['error_msgs'][] = 'ログイン有効期限切れです';
                     session_destroy();
 
                     header('Location: login.php');

@@ -40,5 +40,5 @@
 
     </nav>
 </header>
-<!-- グレーカバー -->
+<!-- カバー -->
 <div class="hidden" id="cover"></div>

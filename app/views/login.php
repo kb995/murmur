@@ -17,7 +17,7 @@ $pageTitle = 'ログイン';
 ?>
 
 <main class="container">
-    <form class="w-50 mx-auto" method="post" action="">
+    <form class="w-50 mx-auto" method="post" novalidate>
         <h1 class="h3 text-center my-5">LOGIN</h1>
         <!-- エラーメッセージ -->
         <?php require_once('./template/error_msgs.php') ?>

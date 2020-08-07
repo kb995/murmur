@@ -2,8 +2,8 @@
 
 class UserValidation {
 
-    private $data;
-    private $error_msgs = array();
+    public $data;
+    public $error_msgs = array();
 
     public function setData($data) {
         $this->data = $data;
@@ -19,20 +19,38 @@ class UserValidation {
     public function checkSignup() {
         $email = $this->data['email'];
         $password = $this->data['password'];
+        $error_msgs = $_SESSION['error_msgs'];
 
         if(empty($email)) {
-            $this->error_msgs[] = 'メールアドレスが未入力です';
+            $_SESSION['error_msgs'] = 'メールアドレスが未入力です';
+        }
+        if(empty($password)) {
+            $_SESSION['error_msgs'] = 'パスワードが未入力です';
+        }
+
+        if(count($error_msgs > 0)) {
+            return false;
+        }
+        return true;
+    }
+    // ログイン時 ====================> 完成形
+    public function checkLogin() {
+        $email = $this->data['email'];
+        $password = $this->data['password'];
+
+        if(empty($email)) {
+             $this->error_msgs[] = 'メールアドレスが未入力です';
         }
         if(empty($password)) {
             $this->error_msgs[] = 'パスワードが未入力です';
         }
 
-        if(count($this->error_msgs) > 0) {
+        if(count((array)$this->error_msgs) > 0) {
             return false;
         }
         return true;
     }
-
+// ========================================================
     // プロフ更新時チェック
     public function checkProf() {
         $email = $this->data['email'];
@@ -40,12 +58,12 @@ class UserValidation {
         $profile = $this->data['profile'];
 
         if(empty($email)) {
-            $this->error_msgs[] = 'メールアドレスが未入力です';
+            $_SESSION['error_msgs'] = 'メールアドレスが未入力です';
         }
 
-        if(count($this->error_msgs) > 0) {
-            return false;
-        }
+        // if(count((array)$this->error_msgs) > 0) {
+            // return false;
+        // }
         return true;
     }
 }
