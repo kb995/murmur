@@ -14,28 +14,6 @@ body {
   color: #fff;
 }
 
-header {
-  background-color: #ebebeb;
-}
-
-header .nav-link {
-  color: #000;
-}
-
-header .nav-link:hover {
-  border-bottom: 2px solid blue;
-}
-
-header .logo .navbar-brand {
-  text-decoration: none;
-  color: #121212;
-}
-
-.card {
-  background-color: #121212;
-  border: solid 3px #fff;
-}
-
 .count_btn:hover {
   text-decoration: none;
   background-color: #007bff;
@@ -62,19 +40,6 @@ header .logo .navbar-brand {
   border-color: #d1d1d1;
 }
 
-.timeline .user_name {
-  font-size: 1.5rem;
-}
-
-.timeline .post_text {
-  font-size: 1.5rem;
-  letter-spacing: .1rem;
-}
-
-.input_text {
-  font-size: 1.6rem;
-}
-
 .like_btn {
   background-color: #111;
   border: none;
@@ -85,11 +50,6 @@ header .logo .navbar-brand {
 .like_btn:hover {
   -webkit-transform: translateY(-2px);
           transform: translateY(-2px);
-}
-
-.like_num {
-  font-size: 1.2rem;
-  padding-right: 1rem;
 }
 
 .delete_btn {
@@ -124,19 +84,43 @@ header .logo .navbar-brand {
   opacity: .8;
 }
 
-.post_count {
-  color: #fff;
-  font-size: 1.3rem;
-  float: left;
-  display: inline;
+header {
+  background-color: #ebebeb;
 }
 
-.count_warning {
-  color: yellow;
+header .nav-link {
+  color: #000;
 }
 
-.count_danger {
-  color: red;
+header .nav-link:hover {
+  border-bottom: 2px solid blue;
+}
+
+header .logo .navbar-brand {
+  text-decoration: none;
+  color: #121212;
+}
+
+#withdraw_modal {
+  font-size: 1.6rem;
+  background-color: #fff;
+  color: #333;
+  width: 40%;
+  padding: 50px;
+  border-radius: 4px;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 2;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+}
+
+#withdraw_modal.hidden {
+  -webkit-transform: translateY(-500px);
+          transform: translateY(-500px);
 }
 
 #menu {
@@ -195,27 +179,5 @@ body.menu-open #cover {
 
 body.menu-open #menu {
   right: -15%;
-}
-
-#withdraw_modal {
-  font-size: 1.6rem;
-  background-color: #fff;
-  color: #333;
-  width: 40%;
-  padding: 50px;
-  border-radius: 4px;
-  position: absolute;
-  top: 100px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  z-index: 2;
-  -webkit-transition: all .4s;
-  transition: all .4s;
-}
-
-#withdraw_modal.hidden {
-  -webkit-transform: translateY(-500px);
-          transform: translateY(-500px);
 }
 /*# sourceMappingURL=app.css.map */

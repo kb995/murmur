@@ -1,0 +1,64 @@
+
+.count_btn {
+    &:hover {
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        transition: .2s;
+        border-radius: 6px;
+    }
+}
+.btn_active {
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 6px;
+}
+
+.btn-l {
+    color: #fff;
+    border: solid 3px #fff;
+    &:hover {
+        color: #d1d1d1;
+        border-color: #d1d1d1;
+    }
+}
+
+.like_btn {
+    background-color: #111;
+    border: none;
+    font-size: 1.2rem;
+    padding: 0;
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.delete_btn {
+    border: none;
+    &:hover {
+        color: #fff;
+        background-color: red;
+        border: none;
+    }
+}
+.edit_btn {
+    border: none;
+    &:hover {
+        color: #fff;
+        background-color: green;
+        border: none;
+    }
+}
+
+.post_btn {
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 3px;
+    // box-shadow: 0 4px 0 gray;
+    display: inline;
+    float: right;
+    &:hover {
+        opacity: .8;
+    }
+}

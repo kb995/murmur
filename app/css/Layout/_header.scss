@@ -1,0 +1,17 @@
+header {
+    // ヘッダー背景色
+    background-color: #ebebeb;
+
+    // ナビ文字色
+    .nav-link {
+        color: #000;
+        &:hover {
+            border-bottom: 2px solid blue;
+        }
+    }
+    // サイトロゴ
+    .logo .navbar-brand {
+        text-decoration: none;
+        color: #121212;
+    }
+}
