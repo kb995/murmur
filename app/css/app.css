@@ -101,6 +101,44 @@ header .logo .navbar-brand {
   color: #121212;
 }
 
+.card {
+  background-color: #121212;
+  border: solid 3px #fff;
+}
+
+.timeline .user_name {
+  font-size: 1.5rem;
+}
+
+.timeline .post_text {
+  font-size: 1.5rem;
+  letter-spacing: .1rem;
+}
+
+.input_text {
+  font-size: 1.6rem;
+}
+
+.like_num {
+  font-size: 1.2rem;
+  padding-right: 1rem;
+}
+
+.post_count {
+  color: #fff;
+  font-size: 1.3rem;
+  float: left;
+  display: inline;
+}
+
+.count_warning {
+  color: yellow;
+}
+
+.count_danger {
+  color: red;
+}
+
 #withdraw_modal {
   font-size: 1.6rem;
   background-color: #fff;
