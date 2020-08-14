@@ -37,6 +37,24 @@ class User {
     public function setProfile($profile) {
         $this->profile = $profile;
     }
+    public function getThumbnail($user_id) {
+        try {
+            $dbh = dbConnect();
+            $sql = 'SELECT thumbnail
+                    FROM users
+                    WHERE id = :user_id AND delete_flg = 0';
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
+        }
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+    public function setThumbnail($thumbnail) {
+        $this->thumbnail = $thumbnail;
+    }
 
     // * ---------- CRUD ---------- *
 
@@ -64,13 +82,14 @@ class User {
         try {
             $dbh = dbConnect();
             $sql = 'UPDATE users
-                    SET email = :email, name = :name, profile = :profile, updated_at = :updated_at
+                    SET email = :email, name = :name, profile = :profile, thumbnail = :thumbnail, updated_at = :updated_at
                     WHERE id = :user_id';
 
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
             $stmt->bindValue(':profile', $this->profile, PDO::PARAM_STR);
+            $stmt->bindValue(':thumbnail', $this->thumbnail, PDO::PARAM_STR);
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
             $result = $stmt->execute();

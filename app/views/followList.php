@@ -96,7 +96,17 @@ require_once('./template/header.php');
                 <div class="row p-2">
                     <div class="col-3">
                         <!-- サムネイル(仮) -->
-                        <div class="thumb" style="background: gray; width:80px; height:80px;"></div>
+                        <?php
+                        $img = $user->showThumbnail($f_user['followed_id']);
+                        if(!empty($img['thumbnail'])) {
+                            $path = '../resources/images/' . $img['thumbnail'];
+                        } else {
+                            $path = '../resources/images/default.png';
+                        }
+                        ?>
+                        <p>
+                            <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+                        </p>
                         <p class="pt-2">
                             <a href="userDetail.php?user_id=<?php echo $user_info['user_id']; ?>"><?php echo h($user_info['name']); ?></a>
                         </p>

@@ -7,6 +7,25 @@ $user = new UserController;
 $login_user = $_SESSION['login_user'];
 $login_user = $user->getOneUser($_SESSION['login_user']['id']);
 
+
+// 画像ファイルアップロード
+if(!empty($filename)) {
+    $ext = substr($filename, -3);
+    if($ext != 'jpg' && $ext != 'png' && $ext != 'gif') {
+        $_SESSION['error_msgs'][] = '画像は「jpg」「png」「gif」がご利用いただけます';
+    }
+}
+// ファイル名作成
+$image = date('YmdHis') . $_FILES['image']['name'];
+// 一時保存先から指定フォルダにアップロード
+move_uploaded_file($_FILES['image']['tmp_name'], '../resources/images/' . $image);
+// セッションに残しておく (DB保存の準備)
+$_SESSION['image']['name'] = $image;
+// $aaa = $user->showThumbnail(27);
+// echo "<pre style='color: #fff;'>"; var_dump($aaa); echo"</pre>";
+
+
+
 // 記事編集処理
 if($_POST) {
     $user->edit($login_user['id']);
@@ -15,6 +34,9 @@ if($_POST) {
 if(!empty($_GET) && $_GET['action'] === 'withdraw') {
     $user->withdraw($login_user['id']);
 }
+
+
+
 ?>
 
 <?php
@@ -24,7 +46,7 @@ require_once('./template/header.php');
 ?>
 
 <main class="container my-5">
-    <form class="w-50 mx-auto" method="post" action="">
+    <form class="w-50 mx-auto" method="post" action="" enctype="multipart/form-data">
         <h1 class="h3 text-center my-5">プロフ編集</h1>
         <div class="form-controll my-4">
             <!-- エラー表示 -->
@@ -32,7 +54,19 @@ require_once('./template/header.php');
 
             <div class="form-controll my-4">
                 <label class="control-label mt-2" for="">サムネイル</label>
-                <div style="width:150px;height:200px;background-color:gray;"></div>
+                <?php
+                $img = $user->showThumbnail($login_user['id']);
+                if(!empty($img['thumbnail'])) {
+                    $path = '../resources/images/' . $img['thumbnail'];
+                } else {
+                    $path = '../resources/images/default.png';
+                }
+                ?>
+                <p>
+                    <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+                </p>
+
+                <input type="file" name="image" size="35">
             </div>
             <div class="form-controll my-4">
                 <label class="control-label" for="">名前</label>

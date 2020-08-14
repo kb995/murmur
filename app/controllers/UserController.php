@@ -41,6 +41,7 @@ class UserController {
             "name" => $_POST['name'],
             "email" => $_POST['email'],
             "profile" => $_POST['profile'],
+            "thumbnail" => $_FILES['image']['name']
         ];
         $validation->setData($data);
 
@@ -52,13 +53,15 @@ class UserController {
             $name = $validate_data['name'];
             $email = $validate_data['email'];
             $profile = $validate_data['profile'];
+            $thumbnail = $_SESSION['image']['name'];
 
             $user = new User;
             $user->setName($name);
             $user->setEmail($email);
             $user->setProfile($profile);
+            $user->setThumbnail($thumbnail);
             $user->update($user_id);
-            header("Location: mypage.php");
+            // header("Location: mypage.php");
         }
     }
 
@@ -96,6 +99,16 @@ class UserController {
         $user = new User;
         return $data = $user->getUserById($user_id);
     }
+    public function showThumbnail($user_id) {
+        $user = new User;
+        $thumbnail = $user->getThumbnail($user_id);
+        if(!empty($thumbnail)) {
+            return $thumbnail;
+        }
+        else {
+            return 'default_img';
+        }
+    }
 
     // * ---------- 認証 ---------- *
 
@@ -108,10 +121,6 @@ class UserController {
             "password" => $_POST['password'],
         ];
         $validation->setData($data);
-        // $aaa = $validation->checkLogin();
-        // echo "<pre>"; var_dump($aaa); echo"</pre>";
-
-        // exit;
 
         if($validation->checkLogin() === false) {
             // バリデーションチェックがクリアならユーザー認証

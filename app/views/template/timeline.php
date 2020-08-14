@@ -1,8 +1,20 @@
 <section class="timeline">
     <?php foreach($current_posts as $post): ?>
         <div class="mx-auto card card my-3 p-4">
+
             <!-- サムネイル(仮) -->
-            <div class="thumb" style="background: gray; width:50px; height:50px;"></div>
+        <?php
+        $img = $user->showThumbnail($post['user_id']);
+        if(!empty($img['thumbnail'])) {
+            $path = '../resources/images/' . $img['thumbnail'];
+        } else {
+            $path = '../resources/images/default.png';
+        }
+    ?>
+    <p>
+        <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+    </p>
+
             <p class="pt-2">
                 <a class="user_name" href="userDetail.php?user_id=<?php echo $post['user_id']; ?>"><?php echo h($post['name']); ?></a>
             </p>

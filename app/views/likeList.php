@@ -43,7 +43,17 @@ require_once('./template/header.php');
         <article class="card p-5 mb-5 mx-auto">
             <h3 class="pb-3 text-center h5 text-muted">プロフィール</h3>
             <!-- プロフィール -->
-            <div class="m-auto" style="width:150px;height:150px;background-color:gray;"></div>
+            <?php
+                $img = $user->showThumbnail($current_user['id']);
+                if(!empty($img['thumbnail'])) {
+                    $path = '../resources/images/' . $img['thumbnail'];
+                } else {
+                    $path = '../resources/images/default.png';
+                }
+            ?>
+            <p>
+                <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+            </p>
             <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo h($current_user['name']); ?></a></p>
             <p><?php echo h($current_user['profile']); ?></p>
 
