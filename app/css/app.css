@@ -1,4 +1,14 @@
-@font-face {}a:hover {
+@font-face {
+  font-family: 'dot';
+  src: url("../../app/resources/font/PixelMplus12-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'dot_bold';
+  src: url("../../app/resources/font/PixelMplus12-Bold.ttf");
+}
+
+a:hover {
   text-decoration: none;
 }
 
@@ -89,6 +99,7 @@ header {
 }
 
 header .nav-link {
+  font-family: "dot_bold";
   color: #000;
 }
 
@@ -106,13 +117,17 @@ header .logo .navbar-brand {
   border: solid 3px #fff;
 }
 
+.page-title {
+  font-family: 'dot_bold';
+}
+
 .timeline .user_name {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .timeline .post_text {
-  font-size: 1.5rem;
-  letter-spacing: .1rem;
+  font-size: 1.7rem;
+  letter-spacing: .2rem;
 }
 
 .input_text {
@@ -127,7 +142,6 @@ header .logo .navbar-brand {
 .post_count {
   color: #fff;
   font-size: 1.3rem;
-  float: left;
   display: inline;
 }
 
@@ -137,6 +151,25 @@ header .logo .navbar-brand {
 
 .count_danger {
   color: red;
+}
+
+.thumb {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  border: 3px solid #fff;
+  background-color: #fff;
+}
+
+.prof-name {
+  font-size: 1.2rem !important;
+  color: #fff !important;
+}
+
+.line {
+  border: 1px solid gray;
 }
 
 #withdraw_modal {

@@ -1,6 +1,10 @@
 @font-face {
-    // font-family: 'dot';
-    // src: url("../../font/PixelMplus10-Regular.ttf");
+    font-family: 'dot';
+    src: url("../../app/resources/font/PixelMplus12-Regular.ttf");
+  }
+@font-face {
+    font-family: 'dot_bold';
+    src: url("../../app/resources/font/PixelMplus12-Bold.ttf");
   }
 
 a:hover {
@@ -15,7 +19,6 @@ body {
 outline: none;
 font-family: "dot";
 background-color: #121212;
-// overflow-y: scroll;
 overflow-x: hidden;
 color: #fff;
 }
