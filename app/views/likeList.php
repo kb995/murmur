@@ -32,13 +32,13 @@ if(!empty($_GET) && $_GET['action'] === 'withdraw') {
 ?>
 
 <?php
-$pageTitle = 'ユーザー投稿詳細';
+$pageTitle = 'いいねリスト';
 require_once('./template/head.php');
 require_once('./template/header.php');
 ?>
 
 <main class="container mb-5">
-    <h1 class="text-center my-5"><?php echo h($current_user['name']); ?> さんのいいね一覧</h1>
+    <h1 class="text-center my-5 h4 page-title">▶ <?php echo h($current_user['name']); ?> さんのいいね一覧</h1>
     <div class="w-50 mx-auto">
         <article class="card p-5 mb-5 mx-auto">
             <h3 class="pb-3 text-center h5 text-muted">プロフィール</h3>
@@ -48,13 +48,13 @@ require_once('./template/header.php');
                 if(!empty($img['thumbnail'])) {
                     $path = '../resources/images/' . $img['thumbnail'];
                 } else {
-                    $path = '../resources/images/default.png';
+                    $path = '../resources/images/user.png';
                 }
             ?>
-            <p>
-                <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+            <p class="text-center">
+                <img class="thumb" src="<?php echo $path; ?>" alt="">
             </p>
-            <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo h($current_user['name']); ?></a></p>
+            <p class="text-center pt-2 h4"><a class="prof-name" href="mypage.php"><?php echo h($current_user['name']); ?></a></p>
             <p><?php echo h($current_user['profile']); ?></p>
 
             <!-- フォロー -->
@@ -80,27 +80,25 @@ require_once('./template/header.php');
                     <?php $post_count = $post->postCount($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $post_count['COUNT(*)']; ?></p>
                 </a>
-                <a href="#" class="col-6 block count_btn">
+                <a href="likeList.php?user_id=<?php echo h($current_user['id']); ?>" class="col-6 block count_btn">
                     <p class="text-center text-muted">いいね</p>
                     <?php $like_count = $like->getLikeCountByUser($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $like_count['COUNT(*)']; ?></p>
                 </a>
             </div>
             <div class="my-3 row">
-                <a href="#" class="col-6 block count_btn">
+                <a href="followList.php?user_id=<?php echo h($current_user['id']); ?>" class="col-6 block count_btn">
                     <p class="text-center text-muted">フォロー</p>
                     <?php $follow_count = $follow->followCount($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $follow_count['COUNT(*)']; ?></p>
                 </a>
-                <a href="#" class="col-6 block count_btn">
+                <a href="followedList.php?user_id=<?php echo h($current_user['id']); ?>" class="col-6 block count_btn">
                     <p class="text-center text-muted">フォロワー</p>
                     <?php $followed_count = $follow->followedCount($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $followed_count['COUNT(*)']; ?></p>
                 </a>
             </div>
         </article>
-
-        <h2 class="text-center h3 my-3">いいね一覧</h2>
         <?php require('./template/timeline.php'); ?>
     </div>
 </main>

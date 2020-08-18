@@ -33,7 +33,7 @@ require_once('./template/header.php');
 ?>
 
 <main class="container mb-5">
-    <h1 class="text-center my-5">フォロワー</h1>
+    <h1 class="text-center my-5 h4 page-title">▶ <?php echo h($current_user['name']); ?> をフォロー中のユーザー</h1>
     <div class="row">
         <div class="col-4">
         <?php if($user->checkUserType($login_user['id'], $current_user['id'])): ?>
@@ -67,7 +67,7 @@ require_once('./template/header.php');
                     <?php $post_count = $post->postCount($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $post_count['COUNT(*)']; ?></p>
                 </a>
-                <a href="#" class="col-6 block count_btn">
+                <a href="likeList.php?user_id=<?php echo $current_user['id']; ?>" class="col-6 block count_btn">
                     <p class="text-center text-muted">いいね</p>
                     <?php $like_count = $like->getLikeCountByUser($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $like_count['COUNT(*)']; ?></p>
@@ -95,24 +95,20 @@ require_once('./template/header.php');
             <article class="mx-auto card my-3 p-4">
                 <div class="row p-2">
                     <div class="col-3">
-                        <!-- サムネイル(仮) -->
+                        <!-- サムネイル -->
                         <?php
                         $img = $user->showThumbnail($f_user['follow_id']);
                         if(!empty($img['thumbnail'])) {
                             $path = '../resources/images/' . $img['thumbnail'];
                         } else {
-                            $path = '../resources/images/default.png';
+                            $path = '../resources/images/user.png';
                         }
                         ?>
-                        <p>
-                            <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+                        <p class="mb-0">
+                            <img class="thumb" src="<?php echo $path; ?>" alt="">
                         </p>
-                        <p class="pt-2">
-                            <a href="userDetail.php?user_id=<?php echo $user_info['user_id']; ?>"><?php echo h($user_info['name']); ?></a>
-                        </p>
-                    </div>
 
-                    <!-- フォロー -->
+                        <!-- フォロー -->
                         <form action="" method="post">
                             <input type="hidden" name="action" value="follow">
                             <input type="hidden" name="followed_user" value="<?php echo $user_info['id']; ?>">
@@ -126,6 +122,10 @@ require_once('./template/header.php');
                                 <?php endif; ?>
                             </div>
                         </form>
+                        <p class="pt-2">
+                            <a href="userDetail.php?user_id=<?php echo $user_info['user_id']; ?>"><?php echo h($user_info['name']); ?></a>
+                        </p>
+                    </div>
 
                     <p class="pt-2 px-2"><?php echo h($user_info['profile']); ?></p>
                 </div>

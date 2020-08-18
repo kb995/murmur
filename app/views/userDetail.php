@@ -4,11 +4,13 @@ require_once('../controllers/PostController.php');
 require_once('../controllers/UserController.php');
 require_once('../controllers/LikeController.php');
 require_once('../controllers/FollowController.php');
+require_once('../controllers/PagingController.php');
 
 $post = new PostController;
 $user = new UserController;
 $like = new LikeController;
 $follow = new FollowController;
+$paging = new PagingController;
 
 $login_user = $_SESSION['login_user'];
 $current_user = $user->getOneUser($_GET['user_id']);
@@ -39,7 +41,7 @@ require_once('./template/header.php');
 ?>
 
 <main class="container mb-5">
-    <h1 class="text-center my-5"><?php echo h($current_user['name']); ?> の投稿一覧</h1>
+    <h1 class="text-center my-5 h4 page-title">▶ <?php echo h($current_user['name']); ?> さんの投稿一覧</h1>
     <div class="w-50 mx-auto">
         <article class="card p-5 mb-5 mx-auto">
             <h3 class="pb-3 text-center h5 text-muted">プロフィール</h3>
@@ -49,17 +51,17 @@ require_once('./template/header.php');
                 if(!empty($img['thumbnail'])) {
                     $path = '../resources/images/' . $img['thumbnail'];
                 } else {
-                    $path = '../resources/images/default.png';
+                    $path = '../resources/images/user.png';
                 }
             ?>
-            <p>
-                <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+            <p class="text-center">
+                <img class="thumb" src="<?php echo $path; ?>" alt="">
             </p>
-            <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo h($current_user['name']); ?></a></p>
+            <p class="text-center pt-2"><a class="prof-name" href="mypage.php"><?php echo h($current_user['name']); ?></a></p>
             <p><?php echo $current_user['profile']; ?></p>
 
             <!-- フォロー -->
-            <?php if(!$user->checkUserType($login_user['id'], $current_user['id'])) : // ログインユーザーと現在のユーザが違えば表示(自分に表示させない) ?>
+            <?php if(!$user->checkUserType($login_user['id'], $current_user['id'])) : ?>
                 <form action="" method="post">
                     <input type="hidden" name="action" value="follow">
                     <div class="text-center">
@@ -79,7 +81,7 @@ require_once('./template/header.php');
                     <?php $post_count = $post->postCount($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $post_count['COUNT(*)']; ?></p>
                 </a>
-                <a href="#" class="col-6 block count_btn">
+                <a href="likeList.php?user_id=<?php echo h($current_user['id']); ?>" class="col-6 block count_btn">
                     <p class="text-center text-muted">いいね</p>
                     <?php $like_count = $like->getLikeCountByUser($current_user['id']); ?>
                     <p class="text-center h4"><?php echo $like_count['COUNT(*)']; ?></p>
@@ -100,5 +102,9 @@ require_once('./template/header.php');
         </article>
 
         <?php require('./template/timeline.php'); ?>
+
     </div>
 </main>
+<?php
+require_once('./template/footer.php')
+?>

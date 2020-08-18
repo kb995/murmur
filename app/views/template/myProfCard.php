@@ -6,13 +6,15 @@
         if(!empty($img['thumbnail'])) {
             $path = '../resources/images/' . $img['thumbnail'];
         } else {
-            $path = '../resources/images/default.png';
+            $path = '../resources/images/user.png';
         }
     ?>
-    <p>
-        <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+    <p class="text-center">
+        <img class="thumb" src="<?php echo $path; ?>" alt="">
     </p>
-    <p class="text-center pt-2 h4"><a href="mypage.php"><?php echo h($login_user['name']); ?></a></p>
+
+    <p class="text-center pt-2"><a class="prof-name" href="mypage.php"><?php echo h($login_user['name']); ?></a></p>
+
     <p><?php echo h($login_user['profile']); ?></p>
     <a href="profEdit.php" type="button" class="btn mb-4 btn-l">プロフィール編集</a>
 

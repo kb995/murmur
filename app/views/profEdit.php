@@ -59,11 +59,11 @@ require_once('./template/header.php');
                 if(!empty($img['thumbnail'])) {
                     $path = '../resources/images/' . $img['thumbnail'];
                 } else {
-                    $path = '../resources/images/default.png';
+                    $path = '../resources/images/user.png';
                 }
                 ?>
                 <p>
-                    <img style="width: 100px;height: 100px;" src="<?php echo $path; ?>" alt="">
+                    <img class="thumb" src="<?php echo $path; ?>" alt="">
                 </p>
 
                 <input type="file" name="image" size="35">
@@ -80,7 +80,9 @@ require_once('./template/header.php');
                 <label class="control-label" for="">プロフィール文</label>
                 <textarea id="comment" class="form-control" name="profile" cols="5" rows="5"><?php echo h($login_user['profile']); ?></textarea>
             </div>
-            <span class="post_count">残り文字数 <span id="label">0</span>/300</span>
+            <p class="text-right">
+                <span class="post_count">残り文字数 <span id="label">0</span>/300</span>
+            </p>
             <div class="text-right my-3">
                 <button type="submit" class="post_btn">編集</button>
             </div>
