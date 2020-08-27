@@ -37,6 +37,7 @@ class User {
     public function setProfile($profile) {
         $this->profile = $profile;
     }
+
     public function getThumbnail($user_id) {
         try {
             $dbh = dbConnect();

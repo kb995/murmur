@@ -2,8 +2,6 @@
     if($_POST) {
         if(!empty($_SESSION['error_msgs'])) {
             $error_msgs = $_SESSION['error_msgs'];
-            // echo "<pre style='color: #fff;'>"; var_dump($error_msgs); echo"</pre>";
-            // exit;
             unset($_SESSION['error_msgs']);
         }
     }

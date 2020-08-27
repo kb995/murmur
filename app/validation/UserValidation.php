@@ -19,21 +19,39 @@ class UserValidation {
     public function checkSignup() {
         $email = $this->data['email'];
         $password = $this->data['password'];
-        $error_msgs = $_SESSION['error_msgs'];
 
         if(empty($email)) {
-            $_SESSION['error_msgs'] = 'メールアドレスが未入力です';
+            $this->error_msgs[] = 'メールアドレスが未入力です';
         }
         if(empty($password)) {
-            $_SESSION['error_msgs'] = 'パスワードが未入力です';
+            $this->error_msgs[] = 'パスワードが未入力です';
         }
 
-        if(count($error_msgs > 0)) {
+
+        // email重複チェック
+        try {
+            $dbh = dbConnect();
+            $sql = 'SELECT email
+                    FROM users
+                    WHERE email = :email AND delete_flg = 0';
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $db_email = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($db_email['email'] === $email){
+                $this->error_msgs[] = 'そのメールアドレスは既に登録されています';
+            }
+        } catch (PDOException $e) {
+            $this->error_msgs[] = 'しばらくしてから再度試してください';
+        }
+
+
+        if(count((array)$this->error_msgs) > 0) {
             return false;
         }
         return true;
     }
-    // ログイン時 ====================> 完成形
+    // ログイン時
     public function checkLogin() {
         $email = $this->data['email'];
         $password = $this->data['password'];
@@ -50,7 +68,7 @@ class UserValidation {
         }
         return true;
     }
-// ========================================================
+
     // プロフ更新時チェック
     public function checkProf() {
         $email = $this->data['email'];
@@ -58,12 +76,16 @@ class UserValidation {
         $profile = $this->data['profile'];
 
         if(empty($email)) {
-            $_SESSION['error_msgs'] = 'メールアドレスが未入力です';
-        }
+            $this->error_msgs[] = 'メールアドレスが未入力です';
+       }
+       if(empty($password)) {
+           $this->error_msgs[] = 'パスワードが未入力です';
+       }
 
-        // if(count((array)$this->error_msgs) > 0) {
-            // return false;
-        // }
-        return true;
+       if(count((array)$this->error_msgs) > 0) {
+           return false;
+       }
+       return true;
+
     }
 }

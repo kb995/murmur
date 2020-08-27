@@ -39,27 +39,28 @@ require_once('./template/header.php');
 ?>
 
 <main class="container my-5">
-    <form class="w-50 mx-auto" method="post" action="" enctype="multipart/form-data">
-        <h1 class="h3 text-center my-5">プロフ編集</h1>
+    <form class="w-50 mx-auto" method="post" action="" enctype="multipart/form-data" novalidate>
+        <h1 class="h2 text-center my-5">プロフ編集</h1>
         <div class="form-controll my-4">
             <!-- エラー表示 -->
             <?php require('./template/error_msgs.php'); ?>
 
             <div class="form-controll my-4">
-                <label class="control-label mt-2" for="">サムネイル</label>
                 <?php
                 $img = $user->showThumbnail($login_user['id']);
                 if(!empty($img['thumbnail'])) {
                     $path = '../resources/images/' . $img['thumbnail'];
                 } else {
-                    $path = '../resources/images/user. png';
+                    $path = '../resources/images/user.png';
                 }
                 ?>
                 <p>
                     <img class="thumb" src="<?php echo $path; ?>" alt="">
                 </p>
-
-                <input type="file" name="image" size="35">
+                <label class="control-label mt-2" for="">サムネイル</label>
+                <p>
+                    <input type="file" name="image" size="35">
+                </p>
             </div>
             <div class="form-controll my-4">
                 <label class="control-label" for="">名前</label>

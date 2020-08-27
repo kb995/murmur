@@ -12,17 +12,17 @@ if($_POST) {
 ?>
 
 <?php
+$pageTitle = 'サインアップ';
 require_once('./template/head.php');
 require_once('./template/header.php');
-$pageTitle = 'サインアップ';
 
 ?>
 
 <main class="container">
-    <form class="w-50 mx-auto" method="post" action="">
-        <h1 class="h3 text-center my-4">SIGN UP</h1>
+    <form class="w-50 mx-auto" method="post" action="" novalidate>
+        <h1 class="h2 text-center my-5">SIGN UP</h1>
         <!-- エラーメッセージ -->
-        <?php require_once('./template/error_msgs.php') ?>
+        <?php require_once('./template/error_msgs.php'); ?>
 
         <div class="form-controll my-4">
             <label class="control-label" for="">ユーザー名</label>

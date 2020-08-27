@@ -10,9 +10,9 @@ if($_POST) {
 ?>
 
 <?php
+$pageTitle = 'ログイン';
 require_once('./template/head.php');
 require_once('./template/header.php');
-$pageTitle = 'ログイン';
 
 ?>
 

@@ -28,7 +28,7 @@ class UserController {
         $user->setPassword($data['password']);
         $result = $user->save();
 
-        $this->login();
+        // $this->login();
 
         header("Location: mypage.php");
         }
@@ -114,7 +114,6 @@ class UserController {
 
     // ログイン処理
     public function login() {
-    //    // バリデーション
         $validation = new UserValidation;
         $data = [
             "email" => $_POST['email'],

@@ -39,7 +39,6 @@ if(!empty($_GET) && $_GET['action'] === 'withdraw') {
 $pageTitle = 'タイムライン';
 require_once('./template/head.php');
 require_once('./template/header.php');
-
 ?>
 
 <main class="container mb-5">
