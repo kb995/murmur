@@ -71,3 +71,8 @@ body.menu-open #cover {
 body.menu-open #menu {
     right: -15%;
 }
+
+a:not([href]):hover {
+    color: #000;
+    text-decoration: none;
+}

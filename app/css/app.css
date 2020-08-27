@@ -101,6 +101,7 @@ header {
 header .nav-link {
   font-family: "dot_bold";
   color: #000;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
 }
 
 header .nav-link:hover {
@@ -250,5 +251,10 @@ body.menu-open #cover {
 
 body.menu-open #menu {
   right: -15%;
+}
+
+a:not([href]):hover {
+  color: #000;
+  text-decoration: none;
 }
 /*# sourceMappingURL=app.css.map */
