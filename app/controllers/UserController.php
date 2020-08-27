@@ -88,7 +88,7 @@ class UserController {
             $err_msg['etc'] = 'しばらくしてから再度試してください';
         }
 
-        // header("Location: login.php");
+        header("Location: login.php");
     }
 
 

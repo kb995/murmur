@@ -4,10 +4,10 @@ require_once('../controllers/UserController.php');
 
 $user = new UserController;
 
-$login_user = $_SESSION['login_user'];
 $login_user = $user->getOneUser($_SESSION['login_user']['id']);
 
-
+// ファイル名作成
+$filename = date('YmdHis') . $_FILES['image']['name'];
 // 画像ファイルアップロード
 if(!empty($filename)) {
     $ext = substr($filename, -3);
@@ -15,16 +15,11 @@ if(!empty($filename)) {
         $_SESSION['error_msgs'][] = '画像は「jpg」「png」「gif」がご利用いただけます';
     }
 }
-// ファイル名作成
-$image = date('YmdHis') . $_FILES['image']['name'];
+
 // 一時保存先から指定フォルダにアップロード
-move_uploaded_file($_FILES['image']['tmp_name'], '../resources/images/' . $image);
+move_uploaded_file($_FILES['image']['tmp_name'], '../resources/images/' . $filename);
 // セッションに残しておく (DB保存の準備)
-$_SESSION['image']['name'] = $image;
-// $aaa = $user->showThumbnail(27);
-// echo "<pre style='color: #fff;'>"; var_dump($aaa); echo"</pre>";
-
-
+$_SESSION['image']['name'] = $filename;
 
 // 記事編集処理
 if($_POST) {
@@ -34,8 +29,6 @@ if($_POST) {
 if(!empty($_GET) && $_GET['action'] === 'withdraw') {
     $user->withdraw($login_user['id']);
 }
-
-
 
 ?>
 
@@ -59,7 +52,7 @@ require_once('./template/header.php');
                 if(!empty($img['thumbnail'])) {
                     $path = '../resources/images/' . $img['thumbnail'];
                 } else {
-                    $path = '../resources/images/user.png';
+                    $path = '../resources/images/user. png';
                 }
                 ?>
                 <p>
