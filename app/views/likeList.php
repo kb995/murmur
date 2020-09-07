@@ -63,7 +63,7 @@ require_once('./template/header.php');
                     <input type="hidden" name="action" value="follow">
                     <div class="text-center">
                         <?php if(!$user->checkUserType($login_user['id'], $current_user['id'])): ?>
-                            <?php if($follow->check_follow($login_user['id'], $current_user['id'])) : ?>
+                            <?php if($follow->checkDuplicateFollow($login_user['id'], $current_user['id'])) : ?>
                                 <button class="btn btn-secondary" name="follow" type="submit">フォロー済み</button>
                             <?php else : ?>
                                 <button class="btn btn-primary" name="follow" type="submit">フォローする</button>

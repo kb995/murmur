@@ -2,6 +2,7 @@
 require_once('../config/app.php');
 
 class PagingController {
+
     public $per_page_post = 5; // 1ページ毎の表示件数
     public $page; // 現在のページ
     public $total_posts; // 投稿総数
@@ -26,10 +27,6 @@ class PagingController {
 
         // ページ総数セット
         $this->total_pages = ceil($this->total_posts / $this->per_page_post); // ページ総数
-
-        // ページ種類判別
-        // $aaa = basename($_SERVER['PHP_SELF']);
-        // echo "<pre>"; var_dump($aaa); echo"</pre>";
 
         switch(basename($_SERVER['PHP_SELF'])) {
             case 'mypage.php':

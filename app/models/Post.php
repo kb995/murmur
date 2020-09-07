@@ -46,6 +46,7 @@ class Post {
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $result = $stmt->execute();
             return $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }
@@ -80,6 +81,7 @@ class Post {
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_STR);
             $result = $stmt->execute();
+
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }
@@ -148,7 +150,7 @@ class Post {
             return $result;
         }
 
-            // 投稿数取得
+        // 投稿数取得
         public function getPostCount($user_id) {
             $dbh = dbConnect();
             $sql = 'SELECT COUNT(*)
@@ -159,6 +161,5 @@ class Post {
             $stmt->execute();
             $count = $stmt->fetch(PDO::FETCH_ASSOC);
             return $count;
-    }
-
+        }
     }

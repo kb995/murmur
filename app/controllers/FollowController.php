@@ -1,6 +1,5 @@
 <?php
 require_once('../config/app.php');
-// require_once('../models/Follow.php');
 
 class FollowController {
 
@@ -19,12 +18,15 @@ class FollowController {
             $stmt->bindValue(':follow_id', $login_id, PDO::PARAM_INT);
             $stmt->bindValue(':followed_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
+
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }
+
+        header("Location: " . $_SERVER['PHP_SELF'] . '?user_id=' . $user_id);
     }
 
-    // フォローチェック
+    // フォロー済みかチェック
     public function checkDuplicateFollow($follow_user, $followed_user) {
         try {
             $dbh = dbConnect();
@@ -36,12 +38,12 @@ class FollowController {
             $stmt->bindValue(':followed_id', $followed_user, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
             if($result) {
                 return true;
             } else {
                 return false;
             }
-
 
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';

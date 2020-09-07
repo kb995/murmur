@@ -47,12 +47,14 @@ class User {
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
+
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }
-        return $stmt->fetch(PDO::FETCH_ASSOC);
 
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
     public function setThumbnail($thumbnail) {
         $this->thumbnail = $thumbnail;
     }
@@ -85,7 +87,6 @@ class User {
             $sql = 'UPDATE users
                     SET email = :email, name = :name, profile = :profile, thumbnail = :thumbnail, updated_at = :updated_at
                     WHERE id = :user_id';
-
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
@@ -112,6 +113,7 @@ class User {
             $stmt = $dbh->prepare($sql);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
+
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }

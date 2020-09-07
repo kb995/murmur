@@ -6,7 +6,6 @@ require_once('../validation/PostValidation.php');
 class PostController {
 
     // * ---------- CRUD ---------- *
-
     // 新規投稿登録
     public function new() {
         $validation = new PostValidation;
@@ -14,6 +13,7 @@ class PostController {
             "text" => $_POST['text'],
         ];
         $validation->setData($data);
+
         if($validation->checkPost() === false) {
             $_SESSION['error_msgs'] = $validation->getErrorMsgs();
         } else {
@@ -23,6 +23,7 @@ class PostController {
             $post->setText($text);
             $post->setUserId($_SESSION['login_user']['id']);
             $post->save();
+
             header("Location: mypage.php");
         }
     }
@@ -34,6 +35,7 @@ class PostController {
             "text" => $_POST['text'],
         ];
         $validation->setData($data);
+
         if($validation->checkPost() === false) {
             $_SESSION['error_msgs'] = $validation->getErrorMsgs();
         } else {
@@ -58,6 +60,8 @@ class PostController {
         header('Location: mypage.php');
 
     }
+
+
     // * ---------- データ取得 ---------- *
 
     // 最新記事取得
@@ -100,6 +104,7 @@ class PostController {
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
             $_SESSION['error_msgs'] = 'しばらくしてから再度試してください';
         }

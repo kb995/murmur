@@ -28,7 +28,7 @@ class UserController {
         $user->setPassword($data['password']);
         $result = $user->save();
 
-        // $this->login();
+        $this->login();
 
         header("Location: mypage.php");
         }
@@ -61,7 +61,7 @@ class UserController {
             $user->setProfile($profile);
             $user->setThumbnail($thumbnail);
             $user->update($user_id);
-            // header("Location: mypage.php");
+            header("Location: mypage.php");
         }
     }
 

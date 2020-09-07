@@ -27,7 +27,6 @@ class UserValidation {
             $this->error_msgs[] = 'パスワードが未入力です';
         }
 
-
         // email重複チェック
         try {
             $dbh = dbConnect();
@@ -45,12 +44,13 @@ class UserValidation {
             $this->error_msgs[] = 'しばらくしてから再度試してください';
         }
 
-
         if(count((array)$this->error_msgs) > 0) {
             return false;
         }
         return true;
     }
+
+
     // ログイン時
     public function checkLogin() {
         $email = $this->data['email'];
@@ -69,23 +69,25 @@ class UserValidation {
         return true;
     }
 
+
     // プロフ更新時チェック
     public function checkProf() {
-        $email = $this->data['email'];
         $name = $this->data['name'];
+        $email = $this->data['email'];
         $profile = $this->data['profile'];
+        $thumbnail = $this->data['thumbnail'];
 
+        if(empty($name)) {
+            $this->error_msgs[] = '名前が未入力です';
+        }
         if(empty($email)) {
             $this->error_msgs[] = 'メールアドレスが未入力です';
-       }
-       if(empty($password)) {
-           $this->error_msgs[] = 'パスワードが未入力です';
-       }
+        }
 
-       if(count((array)$this->error_msgs) > 0) {
-           return false;
-       }
-       return true;
-
+        if(count((array)$this->error_msgs) > 0) {
+            return false;
+        }
+        return true;
     }
+
 }

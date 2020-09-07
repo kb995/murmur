@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg container">
         <h1 class="logo">
             <a class="navbar-brand" href="mypage.php">
-            <a href="/"><img src="https://fontmeme.com/permalink/200814/5b2c524e722487b20ff9f6e220076a3f.png" alt="sharp-core-font" border="0"></a>        </h1>
+            <a href="mypage.php"><img src="https://fontmeme.com/permalink/200814/5b2c524e722487b20ff9f6e220076a3f.png" alt="sharp-core-font" border="0"></a>        </h1>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <?php if(empty($_SESSION['login_flg'])): ?>
                 <ul class="navbar-nav ml-auto">
