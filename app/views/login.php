@@ -24,11 +24,11 @@ require_once('./template/header.php');
 
         <div class="form-controll my-4">
             <label class="control-label" for="">メールアドレス<span class="badge badge-danger ml-2">必須</span></label>
-            <input class="form-control" type="email" required name="email" value="<?php if(!empty($_POST['email'])) echo h($_POST['email']); ?>">
+            <input class="form-control" type="email" required name="email" value="<?php if(!empty($_POST['email'])) { echo h($_POST['email']); } else { echo 'test_user@email.com'; }; ?>">
         </div>
         <div class="form-controll my-4">
             <label class="control-label" for="">パスワード<span class="badge badge-danger ml-2">必須</span></label>
-            <input class="form-control" type="password" required name="password" value="<?php if(!empty($_POST['password'])) echo h($_POST['password']); ?>">
+            <input class="form-control" type="password" required name="password" value="<?php if(!empty($_POST['password'])) { echo h($_POST['password']); } else { echo '11111111'; }?>">
         </div>
 
         <div class="text-right my-3">

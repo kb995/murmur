@@ -53,11 +53,11 @@ require_once('./template/header.php');
             <?php endif; ?>
         </div>
 
-        <!-- タイムライン -->
+        <!-- フォローワー一覧 -->
         <div class="col-8">
         <?php foreach($followed_users as $f_user): ?>
         <?php $user_info = $user->getOneUser($f_user['follow_id']); ?>
-            <article class="card my-2 mx-2 p-4 col-5 float-left h-50">
+            <article class="card my-2 mx-2 p-4 col-5 float-left">
                         <!-- サムネイル -->
                         <?php
                         $img = $user->showThumbnail($f_user['follow_id']);
